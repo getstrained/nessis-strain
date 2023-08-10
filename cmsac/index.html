@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>index.knit</title>
+    <meta charset="utf-8" />
+    <script src="index_files/header-attrs/header-attrs.js"></script>
+    <link href="index_files/remark-css/default.css" rel="stylesheet" />
+    <script src="index_files/clipboard/clipboard.min.js"></script>
+    <link href="index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="index_files/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="index_files/fabric/fabric.min.js"></script>
+    <link href="index_files/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="index_files/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link href="index_files/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="index_files/pagedtable/js/pagedtable.js"></script>
+    <script src="index_files/htmlwidgets/htmlwidgets.js"></script>
+    <link href="index_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="index_files/datatables-binding/datatables.js"></script>
+    <script src="index_files/jquery/jquery-3.6.0.min.js"></script>
+    <link href="index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="index_files/dt-core/js/jquery.dataTables.min.js"></script>
+    <link href="index_files/nouislider/jquery.nouislider.min.css" rel="stylesheet" />
+    <script src="index_files/nouislider/jquery.nouislider.min.js"></script>
+    <link href="index_files/selectize/selectize.bootstrap3.css" rel="stylesheet" />
+    <script src="index_files/selectize/selectize.min.js"></script>
+    <link href="index_files/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+    <script src="index_files/crosstalk/js/crosstalk.min.js"></script>
+    <link rel="stylesheet" href="themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# <div class="line-block">Big Data Bowl Workshop</div>
+]
+.subtitle[
+## Quang Nguyen
+]
+.institute[
+### CMSAC23
+]
+.date[
+### <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg> <span class="citation">@qntkhvn</span>       <svg aria-hidden="true" role="img" viewBox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> qntkhvn       <svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg> qntkhvn.netlify.app<br>
+]
+
+---
+
+
+&lt;!-- layout: true --&gt;
+&lt;!-- &lt;div class="my-footer"&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt; --&gt;
+
+
+
+
+
+
+
+---
+
+# Plan for today
+
+bit.ly/cmsac23_workshop
+
+GOAL: an overview of how to do a Big Data Bowl project from start to finish
+
+What should you takeaway?
+
+*   NOT neccessarily the code
+
+*   focus on the **concepts**
+
+*   how to present results
+
+Case study: Developing a pass rush metric (inspired by 2023 BDB finalist entry)
+
+---
+
+# Outline
+
+*   Big Data Bowl overview
+
+*   Data overview, preparation, and visualization
+
+*   Metric formulation
+
+*   Presentation of results
+
+---
+
+count: false
+
+class: center, middle
+
+&lt;p style="font-size:3em; color: #C41230"&gt;
+&lt;b&gt;
+Big Data Bowl overview
+&lt;/b&gt;
+&lt;/p&gt;
+
+---
+
+# NFL Big Data Bowl: Background
+
+* Premier sports analytics competition, focusing on player tracking data
+
+* Data are collected at 10 Hz (10 frames per second) using RFID chips placed in player shoulder pads and ball
+
+* Every year the NFL releases a sample a player-tracking data with a competition theme
+
+
+---
+
+# NFL Big Data Bowl: Themes
+
+
+* Started in 2019, hosted on Kaggle since 2nd year
+
+    * [2019](https://github.com/nfl-football-ops/Big-Data-Bowl): open-ended theme
+    
+    * [2020](https://www.kaggle.com/competitions/nfl-big-data-bowl-2020): yards gained after receiving a handoff (prediction competition)
+    
+    * [2021](https://www.kaggle.com/competitions/nfl-big-data-bowl-2021): defensive performance on pass plays
+    
+    * [2022](https://www.kaggle.com/competitions/nfl-big-data-bowl-2022): special teams performance
+    
+    * [2023](https://www.kaggle.com/competitions/nfl-big-data-bowl-2023): linemen on pass plays
+    
+    * ***[2024](https://www.kaggle.com/competitions/nfl-big-data-bowl-2024): TBD***
+    
+---
+
+# NFL Big Data Bowl: Tracks &amp; Prizes
+
+Tracks
+
+*   Undergraduate (formerly "college")
+
+*   Metric (formely "open")
+
+*   Coaching presentation (new for 2023)
+
+--
+
+Prizes
+
+*   $100,000 total prize since 2021
+
+*   Prize distribution may be different for each year
+
+*   For 2023: 8 finalists ($10,000 each) + 
+1 grand champ ($20,000 more)
+
+---
+
+count: false
+
+class: center, middle
+
+&lt;p style="font-size:3em; color: #C41230"&gt;
+&lt;b&gt;
+Data
+&lt;/b&gt;
+&lt;/p&gt;
+
+---
+
+# Data overview
+
+- What are the provided datasets? (examples from BDB 2023)
+
+  *   Tracking data
+  
+  *   Contextual data (game, play, player, PFF scouting data)
+
+- Full data dictionary: https://www.kaggle.com/competitions/nfl-big-data-bowl-2023/data
+
+---
+
+# Data: games
+
+`games.csv`: game info
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["gameId"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["season"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["week"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["gameDate"],"name":[4],"type":["chr"],"align":["left"]},{"label":["gameTimeEastern"],"name":[5],"type":["time"],"align":["right"]},{"label":["homeTeamAbbr"],"name":[6],"type":["chr"],"align":["left"]},{"label":["visitorTeamAbbr"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"2021090900","2":"2021","3":"1","4":"09/09/2021","5":"20:20:00","6":"TB","7":"DAL"},{"1":"2021091200","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"ATL","7":"PHI"},{"1":"2021091201","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"BUF","7":"PIT"},{"1":"2021091202","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"CAR","7":"NYJ"},{"1":"2021091203","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"CIN","7":"MIN"},{"1":"2021091204","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"DET","7":"SF"},{"1":"2021091205","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"HOU","7":"JAX"},{"1":"2021091206","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"IND","7":"SEA"},{"1":"2021091207","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"TEN","7":"ARI"},{"1":"2021091208","2":"2021","3":"1","4":"09/12/2021","5":"13:00:00","6":"WAS","7":"LAC"},{"1":"2021091209","2":"2021","3":"1","4":"09/12/2021","5":"16:25:00","6":"KC","7":"CLE"},{"1":"2021091210","2":"2021","3":"1","4":"09/12/2021","5":"16:25:00","6":"NE","7":"MIA"},{"1":"2021091211","2":"2021","3":"1","4":"09/12/2021","5":"16:25:00","6":"NO","7":"GB"},{"1":"2021091212","2":"2021","3":"1","4":"09/12/2021","5":"16:25:00","6":"NYG","7":"DEN"},{"1":"2021091213","2":"2021","3":"1","4":"09/12/2021","5":"20:20:00","6":"LA","7":"CHI"},{"1":"2021091300","2":"2021","3":"1","4":"09/13/2021","5":"20:15:00","6":"LV","7":"BAL"},{"1":"2021091600","2":"2021","3":"2","4":"09/16/2021","5":"20:20:00","6":"WAS","7":"NYG"},{"1":"2021091900","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"CAR","7":"NO"},{"1":"2021091901","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"CHI","7":"CIN"},{"1":"2021091902","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"CLE","7":"HOU"},{"1":"2021091903","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"IND","7":"LA"},{"1":"2021091904","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"JAX","7":"DEN"},{"1":"2021091905","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"MIA","7":"BUF"},{"1":"2021091906","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"NYJ","7":"NE"},{"1":"2021091907","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"PHI","7":"SF"},{"1":"2021091908","2":"2021","3":"2","4":"09/19/2021","5":"13:00:00","6":"PIT","7":"LV"},{"1":"2021091909","2":"2021","3":"2","4":"09/19/2021","5":"16:05:00","6":"ARI","7":"MIN"},{"1":"2021091910","2":"2021","3":"2","4":"09/19/2021","5":"16:05:00","6":"TB","7":"ATL"},{"1":"2021091911","2":"2021","3":"2","4":"09/19/2021","5":"16:25:00","6":"LAC","7":"DAL"},{"1":"2021091912","2":"2021","3":"2","4":"09/19/2021","5":"16:25:00","6":"SEA","7":"TEN"},{"1":"2021091913","2":"2021","3":"2","4":"09/19/2021","5":"20:20:00","6":"BAL","7":"KC"},{"1":"2021092000","2":"2021","3":"2","4":"09/20/2021","5":"20:15:00","6":"GB","7":"DET"},{"1":"2021092300","2":"2021","3":"3","4":"09/23/2021","5":"20:20:00","6":"HOU","7":"CAR"},{"1":"2021092600","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"BUF","7":"WAS"},{"1":"2021092601","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"CLE","7":"CHI"},{"1":"2021092602","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"DET","7":"BAL"},{"1":"2021092603","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"JAX","7":"ARI"},{"1":"2021092604","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"KC","7":"LAC"},{"1":"2021092605","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"NE","7":"NO"},{"1":"2021092606","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"NYG","7":"ATL"},{"1":"2021092607","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"PIT","7":"CIN"},{"1":"2021092608","2":"2021","3":"3","4":"09/26/2021","5":"13:00:00","6":"TEN","7":"IND"},{"1":"2021092609","2":"2021","3":"3","4":"09/26/2021","5":"16:05:00","6":"DEN","7":"NYJ"},{"1":"2021092610","2":"2021","3":"3","4":"09/26/2021","5":"16:05:00","6":"LV","7":"MIA"},{"1":"2021092611","2":"2021","3":"3","4":"09/26/2021","5":"16:25:00","6":"LA","7":"TB"},{"1":"2021092612","2":"2021","3":"3","4":"09/26/2021","5":"16:25:00","6":"MIN","7":"SEA"},{"1":"2021092613","2":"2021","3":"3","4":"09/26/2021","5":"20:20:00","6":"SF","7":"GB"},{"1":"2021092700","2":"2021","3":"3","4":"09/27/2021","5":"20:15:00","6":"DAL","7":"PHI"},{"1":"2021093000","2":"2021","3":"4","4":"09/30/2021","5":"20:20:00","6":"CIN","7":"JAX"},{"1":"2021100300","2":"2021","3":"4","4":"10/03/2021","5":"13:00:00","6":"ATL","7":"WAS"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+# Data: plays
+
+`plays.csv`: play-level info
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["gameId"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["playId"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["playDescription"],"name":[3],"type":["chr"],"align":["left"]},{"label":["quarter"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["down"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["yardsToGo"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["possessionTeam"],"name":[7],"type":["chr"],"align":["left"]},{"label":["defensiveTeam"],"name":[8],"type":["chr"],"align":["left"]},{"label":["yardlineSide"],"name":[9],"type":["chr"],"align":["left"]},{"label":["yardlineNumber"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["gameClock"],"name":[11],"type":["time"],"align":["right"]},{"label":["preSnapHomeScore"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["preSnapVisitorScore"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["passResult"],"name":[14],"type":["chr"],"align":["left"]},{"label":["penaltyYards"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["prePenaltyPlayResult"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["playResult"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["foulName1"],"name":[18],"type":["chr"],"align":["left"]},{"label":["foulNFLId1"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["foulName2"],"name":[20],"type":["chr"],"align":["left"]},{"label":["foulNFLId2"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["foulName3"],"name":[22],"type":["chr"],"align":["left"]},{"label":["foulNFLId3"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["absoluteYardlineNumber"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["offenseFormation"],"name":[25],"type":["chr"],"align":["left"]},{"label":["personnelO"],"name":[26],"type":["chr"],"align":["left"]},{"label":["defendersInBox"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["personnelD"],"name":[28],"type":["chr"],"align":["left"]},{"label":["dropBackType"],"name":[29],"type":["chr"],"align":["left"]},{"label":["pff_playAction"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["pff_passCoverage"],"name":[31],"type":["chr"],"align":["left"]},{"label":["pff_passCoverageType"],"name":[32],"type":["chr"],"align":["left"]}],"data":[{"1":"2021090900","2":"97","3":"(13:33) (Shotgun) T.Brady pass incomplete deep right to C.Godwin.","4":"1","5":"3","6":"2","7":"TB","8":"DAL","9":"TB","10":"33","11":"13:33:00","12":"0","13":"0","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"43","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"137","3":"(13:18) (Shotgun) D.Prescott pass deep left to A.Cooper pushed ob at DAL 30 for 28 yards (A.Winfield).","4":"1","5":"1","6":"10","7":"DAL","8":"TB","9":"DAL","10":"2","11":"13:18:00","12":"0","13":"0","14":"C","15":"NA","16":"28","17":"28","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"108","25":"EMPTY","26":"1 RB, 2 TE, 2 WR","27":"6","28":"4 DL, 4 LB, 3 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"187","3":"(12:23) (Shotgun) D.Prescott pass short middle to D.Schultz to DAL 39 for 5 yards (D.White).","4":"1","5":"2","6":"6","7":"DAL","8":"TB","9":"DAL","10":"34","11":"12:23:00","12":"0","13":"0","14":"C","15":"NA","16":"5","17":"5","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"76","25":"SHOTGUN","26":"0 RB, 2 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"282","3":"(9:56) D.Prescott pass incomplete deep left to C.Lamb.","4":"1","5":"1","6":"10","7":"DAL","8":"TB","9":"TB","10":"39","11":"09:56:00","12":"0","13":"0","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"49","25":"SINGLEBACK","26":"1 RB, 2 TE, 2 WR","27":"6","28":"4 DL, 3 LB, 4 DB","29":"TRADITIONAL","30":"1","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"349","3":"(9:46) (Shotgun) D.Prescott pass incomplete short left to C.Lamb [L.David].","4":"1","5":"3","6":"15","7":"DAL","8":"TB","9":"TB","10":"44","11":"09:46:00","12":"0","13":"0","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"54","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"7","28":"3 DL, 4 LB, 4 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"410","3":"(8:53) (Shotgun) T.Brady pass short middle to M.Evans to TB 21 for 10 yards (T.Diggs).","4":"1","5":"2","6":"5","7":"TB","8":"DAL","9":"TB","10":"11","11":"08:53:00","12":"0","13":"0","14":"C","15":"NA","16":"10","17":"10","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"21","25":"EMPTY","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"434","3":"(8:24) (No Huddle, Shotgun) T.Brady pass incomplete short left to M.Evans.","4":"1","5":"1","6":"10","7":"TB","8":"DAL","9":"TB","10":"21","11":"08:24:00","12":"0","13":"0","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"31","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"456","3":"(8:20) (Shotgun) T.Brady pass deep middle to R.Gronkowski to TB 40 for 19 yards (D.Kazee).","4":"1","5":"2","6":"10","7":"TB","8":"DAL","9":"TB","10":"21","11":"08:20:00","12":"0","13":"0","14":"C","15":"NA","16":"19","17":"19","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"31","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-6","32":"Zone"},{"1":"2021090900","2":"480","3":"(7:53) (No Huddle, Shotgun) T.Brady pass deep right to A.Brown ran ob at DAL 32 for 28 yards (A.Brown).","4":"1","5":"1","6":"10","7":"TB","8":"DAL","9":"TB","10":"40","11":"07:53:00","12":"0","13":"0","14":"C","15":"NA","16":"28","17":"28","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"50","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"509","3":"(7:30) (No Huddle, Shotgun) T.Brady pass short right to A.Brown pushed ob at DAL 16 for 16 yards (A.Brown; K.Neal).","4":"1","5":"1","6":"10","7":"TB","8":"DAL","9":"DAL","10":"32","11":"07:30:00","12":"0","13":"0","14":"C","15":"NA","16":"16","17":"16","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"78","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"559","3":"(6:13) (Shotgun) T.Brady pass short right to C.Godwin to DAL 5 for 8 yards (A.Brown).","4":"1","5":"2","6":"7","7":"TB","8":"DAL","9":"DAL","10":"13","11":"06:13:00","12":"0","13":"0","14":"C","15":"NA","16":"8","17":"8","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"97","25":"SHOTGUN","26":"1 RB, 2 TE, 2 WR","27":"7","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"583","3":"(5:26) (Shotgun) T.Brady pass short middle to C.Godwin for 5 yards, TOUCHDOWN.","4":"1","5":"1","6":"5","7":"TB","8":"DAL","9":"DAL","10":"5","11":"05:26:00","12":"0","13":"0","14":"C","15":"NA","16":"5","17":"5","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"105","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"7","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"1","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"687","3":"(4:15) (Shotgun) D.Prescott pass short right to M.Gallup to TB 44 for 12 yards (A.Winfield).","4":"1","5":"2","6":"2","7":"DAL","8":"TB","9":"DAL","10":"44","11":"04:15:00","12":"7","13":"0","14":"C","15":"NA","16":"12","17":"12","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"66","25":"SHOTGUN","26":"1 RB, 2 TE, 2 WR","27":"7","28":"4 DL, 3 LB, 4 DB","29":"TRADITIONAL","30":"0","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"735","3":"(2:45) (Shotgun) D.Prescott pass short right to M.Gallup ran ob at TB 29 for 8 yards.","4":"1","5":"2","6":"3","7":"DAL","8":"TB","9":"TB","10":"37","11":"02:45:00","12":"7","13":"0","14":"C","15":"NA","16":"8","17":"8","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"47","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"SCRAMBLE_ROLLOUT_RIGHT","30":"1","31":"Cover-2","32":"Zone"},{"1":"2021090900","2":"764","3":"(2:22) (No Huddle) D.Prescott pass short right to B.Jarwin to TB 22 for 7 yards (C.Davis).","4":"1","5":"1","6":"10","7":"DAL","8":"TB","9":"TB","10":"29","11":"02:22:00","12":"7","13":"0","14":"C","15":"NA","16":"7","17":"7","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"39","25":"SINGLEBACK","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"DESIGNED_ROLLOUT_RIGHT","30":"1","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"788","3":"(1:43) (Shotgun) D.Prescott pass short left to C.Lamb for 22 yards, TOUCHDOWN [R.Nunez-Roches]. TB-S.Murphy-Bunting was injured during the play. His return is Questionable.","4":"1","5":"2","6":"3","7":"DAL","8":"TB","9":"TB","10":"22","11":"01:43:00","12":"7","13":"0","14":"C","15":"NA","16":"22","17":"22","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"32","25":"SHOTGUN","26":"1 RB, 2 TE, 2 WR","27":"6","28":"4 DL, 3 LB, 4 DB","29":"TRADITIONAL","30":"0","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"869","3":"(:59) T.Brady pass deep middle to A.Brown to DAL 45 for 27 yards (J.Kearse). Penalty on DAL-T.Diggs, Illegal Use of Hands, declined.","4":"1","5":"2","6":"7","7":"TB","8":"DAL","9":"TB","10":"28","11":"00:59:00","12":"7","13":"7","14":"C","15":"0","16":"27","17":"27","18":"Illegal Use of Hands","19":"52459","20":"NA","21":"NA","22":"NA","23":"NA","24":"38","25":"SINGLEBACK","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"1","31":"Cover-2","32":"Zone"},{"1":"2021090900","2":"925","3":"(:11) T.Brady pass incomplete short middle to L.Fournette (M.Parsons).","4":"1","5":"2","6":"5","7":"TB","8":"DAL","9":"DAL","10":"40","11":"00:11:00","12":"7","13":"7","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"70","25":"SINGLEBACK","26":"1 RB, 2 TE, 2 WR","27":"7","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"947","3":"(:05) (Shotgun) T.Brady pass incomplete short middle to A.Brown (D.Kazee).","4":"1","5":"3","6":"5","7":"TB","8":"DAL","9":"DAL","10":"40","11":"00:05:00","12":"7","13":"7","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"70","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"5","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-2","32":"Zone"},{"1":"2021090900","2":"1078","3":"(14:21) (No Huddle, Shotgun) D.Prescott pass short middle to T.Pollard to DAL 12 for 5 yards (D.White).","4":"2","5":"2","6":"8","7":"DAL","8":"TB","9":"DAL","10":"7","11":"14:21:00","12":"7","13":"7","14":"C","15":"NA","16":"5","17":"5","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"17","25":"SHOTGUN","26":"1 RB, 0 TE, 4 WR","27":"5","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"1203","3":"(12:07) (Shotgun) T.Brady pass short middle to R.Gronkowski to DAL 43 for 5 yards (D.Lawrence).","4":"2","5":"2","6":"8","7":"TB","8":"DAL","9":"DAL","10":"48","11":"12:07:00","12":"7","13":"7","14":"C","15":"NA","16":"5","17":"5","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"58","25":"SHOTGUN","26":"1 RB, 2 TE, 2 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-2","32":"Zone"},{"1":"2021090900","2":"1227","3":"(11:29) (Shotgun) T.Brady pass short right to C.Godwin pushed ob at DAL 24 for 19 yards (J.Kearse). Penalty on TB-R.Jensen, Taunting, offsetting. Penalty on DAL-C.Watkins, Unnecessary Roughness, offsetting.","4":"2","5":"3","6":"3","7":"TB","8":"DAL","9":"DAL","10":"43","11":"11:29:00","12":"7","13":"7","14":"C","15":"0","16":"19","17":"19","18":"Taunting","19":"40151","20":"Unnecessary Roughness","21":"44955","22":"NA","23":"NA","24":"53","25":"SHOTGUN","26":"1 RB, 2 TE, 2 WR","27":"5","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"2-Man","32":"Man"},{"1":"2021090900","2":"1267","3":"(11:13) T.Brady pass short right to C.Godwin to DAL 7 for 17 yards (A.Brown).","4":"2","5":"1","6":"10","7":"TB","8":"DAL","9":"DAL","10":"24","11":"11:13:00","12":"7","13":"7","14":"C","15":"NA","16":"17","17":"17","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"34","25":"SINGLEBACK","26":"1 RB, 2 TE, 2 WR","27":"7","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"1","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"1312","3":"(9:53) T.Brady pass short right to R.Gronkowski for 2 yards, TOUCHDOWN.","4":"2","5":"2","6":"2","7":"TB","8":"DAL","9":"DAL","10":"2","11":"09:53:00","12":"7","13":"7","14":"C","15":"NA","16":"2","17":"2","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"12","25":"SINGLEBACK","26":"1 RB, 1 TE, 3 WR","27":"7","28":"4 DL, 2 LB, 5 DB","29":"DESIGNED_ROLLOUT_RIGHT","30":"1","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"1368","3":"(9:48) D.Prescott pass short right to C.Lamb to DAL 47 for 22 yards (D.White).","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"DAL","10":"25","11":"09:48:00","12":"14","13":"7","14":"C","15":"NA","16":"22","17":"22","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"35","25":"SINGLEBACK","26":"2 RB, 1 TE, 2 WR","27":"7","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"1","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"1392","3":"(9:09) (Shotgun) D.Prescott pass incomplete short left to A.Cooper. PENALTY on TB-C.Davis, Defensive Pass Interference, 14 yards, enforced at DAL 47 - No Play.","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"DAL","10":"47","11":"09:09:00","12":"14","13":"7","14":"I","15":"14","16":"0","17":"14","18":"Defensive Pass Interference","19":"46132","20":"NA","21":"NA","22":"NA","23":"NA","24":"57","25":"EMPTY","26":"1 RB, 2 TE, 2 WR","27":"6","28":"4 DL, 3 LB, 4 DB","29":"NA","30":"0","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"1425","3":"(9:04) D.Prescott pass short right to B.Jarwin pushed ob at TB 33 for 6 yards (J.Pierre-Paul). Tampa Bay challenged the pass completion ruling, and the play was Upheld. The ruling on the field stands. (Timeout #1.)","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"TB","10":"39","11":"09:04:00","12":"14","13":"7","14":"C","15":"NA","16":"6","17":"6","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"71","25":"SINGLEBACK","26":"1 RB, 2 TE, 2 WR","27":"7","28":"4 DL, 3 LB, 4 DB","29":"SCRAMBLE_ROLLOUT_RIGHT","30":"1","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"1506","3":"(8:16) (Shotgun) D.Prescott pass incomplete deep left to M.Gallup. PENALTY on TB-J.Dean, Defensive Holding, 5 yards, enforced at TB 25 - No Play.","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"TB","10":"25","11":"08:16:00","12":"14","13":"7","14":"I","15":"5","16":"0","17":"5","18":"Defensive Holding","19":"47877","20":"NA","21":"NA","22":"NA","23":"NA","24":"85","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"7","28":"3 DL, 3 LB, 5 DB","29":"NA","30":"1","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"1563","3":"(7:27) (Shotgun) D.Prescott pass short right to A.Cooper to TB 13 for 4 yards (R.Cockrell).","4":"2","5":"2","6":"7","7":"DAL","8":"TB","9":"TB","10":"17","11":"07:27:00","12":"14","13":"7","14":"C","15":"NA","16":"4","17":"4","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"93","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"7","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"1587","3":"(6:46) (Shotgun) D.Prescott pass incomplete short left to C.Lamb.","4":"2","5":"3","6":"3","7":"DAL","8":"TB","9":"TB","10":"13","11":"06:46:00","12":"14","13":"7","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"97","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-1","32":"Man"},{"1":"2021090900","2":"1687","3":"(5:43) (Shotgun) D.Prescott pass incomplete deep left to C.Lamb.","4":"2","5":"2","6":"8","7":"DAL","8":"TB","9":"TB","10":"25","11":"05:43:00","12":"14","13":"7","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"85","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"7","28":"2 DL, 4 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"1726","3":"(5:37) (Shotgun) D.Prescott pass short middle to C.Wilson to TB 12 for 13 yards (A.Winfield).","4":"2","5":"3","6":"8","7":"DAL","8":"TB","9":"TB","10":"25","11":"05:37:00","12":"14","13":"7","14":"C","15":"NA","16":"13","17":"13","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"85","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"2 DL, 4 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-0","32":"Man"},{"1":"2021090900","2":"1776","3":"(4:25) (Shotgun) D.Prescott to TB 10 for -5 yards. FUMBLES, and recovers at TB 10. D.Prescott pass short left to A.Cooper for 5 yards, TOUCHDOWN.","4":"2","5":"2","6":"3","7":"DAL","8":"TB","9":"TB","10":"5","11":"04:25:00","12":"14","13":"7","14":"C","15":"NA","16":"5","17":"5","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"105","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"7","28":"2 DL, 4 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-0","32":"Man"},{"1":"2021090900","2":"1918","3":"(3:30) (Shotgun) D.Prescott pass incomplete deep left to M.Gallup.","4":"2","5":"2","6":"6","7":"DAL","8":"TB","9":"TB","10":"17","11":"03:30:00","12":"14","13":"13","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"93","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-3","32":"Zone"},{"1":"2021090900","2":"1940","3":"(3:26) (Shotgun) D.Prescott pass incomplete short middle to C.Lamb (L.David).","4":"2","5":"3","6":"6","7":"DAL","8":"TB","9":"TB","10":"17","11":"03:26:00","12":"14","13":"13","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"93","25":"EMPTY","26":"1 RB, 1 TE, 3 WR","27":"5","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2008","3":"(3:08) (Shotgun) T.Brady pass short middle to C.Godwin to DAL 47 for 10 yards (J.Smith; J.Lewis).","4":"2","5":"1","6":"10","7":"TB","8":"DAL","9":"TB","10":"43","11":"03:08:00","12":"14","13":"16","14":"C","15":"NA","16":"10","17":"10","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"67","25":"EMPTY","26":"1 RB, 1 TE, 3 WR","27":"4","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-2","32":"Zone"},{"1":"2021090900","2":"2032","3":"(2:45) (No Huddle, Shotgun) T.Brady pass deep right to A.Brown for 47 yards, TOUCHDOWN.","4":"2","5":"1","6":"10","7":"TB","8":"DAL","9":"DAL","10":"47","11":"02:45:00","12":"14","13":"16","14":"C","15":"NA","16":"47","17":"47","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"57","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"2-Man","32":"Man"},{"1":"2021090900","2":"2088","3":"(2:38) (Shotgun) D.Prescott pass short left to A.Cooper to DAL 36 for 11 yards (M.Edwards; J.Dean).","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"DAL","10":"25","11":"02:38:00","12":"21","13":"16","14":"C","15":"NA","16":"11","17":"11","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"35","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2129","3":"(2:00) (Shotgun) D.Prescott pass short left to M.Gallup pushed ob at DAL 44 for 8 yards (J.Dean). PENALTY on TB-J.Dean, Defensive Pass Interference, 11 yards, enforced at DAL 36 - No Play. PENALTY on TB-J.Dean, Face Mask (15 Yards), 15 yards, enforced between downs.","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"DAL","10":"36","11":"02:00:00","12":"21","13":"16","14":"C","15":"26","16":"8","17":"11","18":"Defensive Pass Interference","19":"47877","20":"Face Mask (15 Yards)","21":"47877","22":"NA","23":"NA","24":"46","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"NA","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2169","3":"(1:54) (Shotgun) D.Prescott pass short left to A.Cooper pushed ob at TB 31 for 7 yards (J.Dean).","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"TB","10":"38","11":"01:54:00","12":"21","13":"16","14":"C","15":"NA","16":"7","17":"7","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"72","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2211","3":"(1:50) (Shotgun) D.Prescott pass incomplete short left to M.Gallup (J.Dean).","4":"2","5":"2","6":"3","7":"DAL","8":"TB","9":"TB","10":"31","11":"01:50:00","12":"21","13":"16","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"79","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2233","3":"(1:43) (Shotgun) D.Prescott pass short right to C.Lamb to TB 21 for 10 yards (D.White).","4":"2","5":"3","6":"3","7":"DAL","8":"TB","9":"TB","10":"31","11":"01:43:00","12":"21","13":"16","14":"C","15":"NA","16":"10","17":"10","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"79","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"7","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2257","3":"(1:16) (No Huddle, Shotgun) D.Prescott pass incomplete short right.","4":"2","5":"1","6":"10","7":"DAL","8":"TB","9":"TB","10":"21","11":"01:16:00","12":"21","13":"16","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"89","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"2 DL, 4 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2279","3":"(1:11) (Shotgun) D.Prescott sacked at TB 33 for -12 yards (S.Barrett).","4":"2","5":"2","6":"10","7":"DAL","8":"TB","9":"TB","10":"21","11":"01:11:00","12":"21","13":"16","14":"S","15":"NA","16":"-12","17":"-12","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"89","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"2 DL, 4 LB, 5 DB","29":"SCRAMBLE","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2298","3":"(:35) (No Huddle, Shotgun) D.Prescott scrambles up the middle to TB 29 for 4 yards (J.Tryon). PENALTY on DAL-C.Williams, Offensive Holding, 10 yards, enforced at TB 33 - No Play.","4":"2","5":"3","6":"22","7":"DAL","8":"TB","9":"TB","10":"33","11":"00:35:00","12":"21","13":"16","14":"R","15":"-10","16":"4","17":"-10","18":"Offensive Holding","19":"46119","20":"NA","21":"NA","22":"NA","23":"NA","24":"77","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"NA","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2330","3":"(:28) (Shotgun) D.Prescott scrambles left end pushed ob at TB 42 for 1 yard (S.Barrett; W.Gholston). TB-W.Gholston was injured during the play. His return is Questionable.","4":"2","5":"3","6":"32","7":"DAL","8":"TB","9":"TB","10":"43","11":"00:28:00","12":"21","13":"16","14":"R","15":"NA","16":"1","17":"1","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"67","25":"EMPTY","26":"1 RB, 1 TE, 3 WR","27":"5","28":"3 DL, 3 LB, 5 DB","29":"SCRAMBLE","30":"0","31":"Quarters","32":"Zone"},{"1":"2021090900","2":"2397","3":"(:15) (Shotgun) T.Brady pass incomplete deep right to G.Bernard.","4":"2","5":"1","6":"10","7":"TB","8":"DAL","9":"NA","10":"50","11":"00:15:00","12":"21","13":"16","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"60","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"4 DL, 2 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"2-Man","32":"Man"},{"1":"2021090900","2":"2419","3":"(:09) (Shotgun) T.Brady pass incomplete short right to T.Johnson [M.Parsons].","4":"2","5":"2","6":"10","7":"TB","8":"DAL","9":"NA","10":"50","11":"00:09:00","12":"21","13":"16","14":"I","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"60","25":"SHOTGUN","26":"1 RB, 0 TE, 4 WR","27":"4","28":"2 DL, 2 LB, 7 DB","29":"TRADITIONAL","30":"0","31":"Prevent","32":"Other"},{"1":"2021090900","2":"2441","3":"(:06) (Shotgun) T.Brady pass deep right INTERCEPTED by J.Lewis at DAL -8. J.Lewis to TB 42 for 66 yards (A.Marpet).","4":"2","5":"3","6":"10","7":"TB","8":"DAL","9":"NA","10":"50","11":"00:06:00","12":"21","13":"16","14":"IN","15":"NA","16":"0","17":"0","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"60","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"4","28":"2 DL, 2 LB, 7 DB","29":"TRADITIONAL","30":"0","31":"Prevent","32":"Other"},{"1":"2021090900","2":"2530","3":"(14:57) (Shotgun) D.Prescott pass short left to D.Schultz to DAL 30 for 5 yards (M.Edwards). TB-M.Edwards was injured during the play. His return is Questionable.","4":"3","5":"2","6":"10","7":"DAL","8":"TB","9":"DAL","10":"25","11":"14:57:00","12":"21","13":"16","14":"C","15":"NA","16":"5","17":"5","18":"NA","19":"NA","20":"NA","21":"NA","22":"NA","23":"NA","24":"35","25":"SHOTGUN","26":"1 RB, 1 TE, 3 WR","27":"6","28":"3 DL, 3 LB, 5 DB","29":"TRADITIONAL","30":"0","31":"Cover-2","32":"Zone"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+# Data: players
+
+`players.csv`: player info
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["nflId"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["height"],"name":[2],"type":["chr"],"align":["left"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["birthDate"],"name":[4],"type":["chr"],"align":["left"]},{"label":["collegeName"],"name":[5],"type":["chr"],"align":["left"]},{"label":["officialPosition"],"name":[6],"type":["chr"],"align":["left"]},{"label":["displayName"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"25511","2":"6-4","3":"225","4":"1977-08-03","5":"Michigan","6":"QB","7":"Tom Brady"},{"1":"28963","2":"6-5","3":"240","4":"1982-03-02","5":"Miami, O.","6":"QB","7":"Ben Roethlisberger"},{"1":"29550","2":"6-4","3":"328","4":"1982-01-22","5":"Arkansas","6":"T","7":"Jason Peters"},{"1":"29851","2":"6-2","3":"225","4":"1983-12-02","5":"California","6":"QB","7":"Aaron Rodgers"},{"1":"30078","2":"6-2","3":"228","4":"1982-11-24","5":"Harvard","6":"QB","7":"Ryan Fitzpatrick"},{"1":"30842","2":"6-6","3":"267","4":"1984-05-19","5":"UCLA","6":"TE","7":"Marcedes Lewis"},{"1":"30869","2":"6-7","3":"330","4":"1981-12-12","5":"Louisiana State","6":"T","7":"Andrew Whitworth"},{"1":"33084","2":"6-4","3":"217","4":"1985-05-17","5":"Boston College","6":"QB","7":"Matt Ryan"},{"1":"33107","2":"6-4","3":"315","4":"1985-08-30","5":"Virginia Tech","6":"T","7":"Duane Brown"},{"1":"33130","2":"5-10","3":"175","4":"1986-12-01","5":"California","6":"WR","7":"DeSean Jackson"},{"1":"33131","2":"6-8","3":"300","4":"1986-09-01","5":"Miami","6":"DE","7":"Calais Campbell"},{"1":"33138","2":"6-3","3":"222","4":"1985-07-02","5":"Michigan","6":"QB","7":"Chad Henne"},{"1":"33241","2":"6-3","3":"219","4":"05/15/1986","5":"San Diego","6":"QB","7":"Josh Johnson"},{"1":"33566","2":"5-11","3":"185","4":"1985-11-02","5":"Texas Tech","6":"WR","7":"Danny Amendola"},{"1":"34452","2":"6-3","3":"220","4":"1988-02-07","5":"Georgia","6":"QB","7":"Matthew Stafford"},{"1":"34457","2":"6-4","3":"330","4":"1987-01-25","5":"Alabama","6":"T","7":"Andre Smith"},{"1":"34465","2":"6-0","3":"204","4":"1987-12-20","5":"Ohio State","6":"SS","7":"Malcolm Jenkins"},{"1":"34472","2":"6-4","3":"311","4":"1985-11-19","5":"California","6":"C","7":"Alex Mack"},{"1":"34540","2":"6-5","3":"254","4":"1987-04-07","5":"South Carolina","6":"TE","7":"Jared Cook"},{"1":"34654","2":"5-11","3":"195","4":"1987-08-13","5":"Rutgers","6":"FS","7":"Jason McCourty"},{"1":"34777","2":"6-3","3":"310","4":"1986-01-03","5":"Troy","6":"NT","7":"Steve McLendon"},{"1":"34843","2":"6-2","3":"215","4":"1985-10-13","5":"Michigan State","6":"QB","7":"Brian Hoyer"},{"1":"35441","2":"6-4","3":"313","4":"1987-01-06","5":"Nebraska","6":"DE","7":"Ndamukong Suh"},{"1":"35442","2":"6-4","3":"300","4":"1988-02-25","5":"Oklahoma","6":"DT","7":"Gerald McCoy"},{"1":"35443","2":"6-5","3":"320","4":"1988-07-19","5":"Oklahoma","6":"T","7":"Trent Williams"},{"1":"35446","2":"5-11","3":"195","4":"1989-04-14","5":"Florida","6":"CB","7":"Joe Haden"},{"1":"35449","2":"6-3","3":"304","4":"1987-05-12","5":"California","6":"DE","7":"Tyson Alualu"},{"1":"35452","2":"6-2","3":"265","4":"1988-04-03","5":"Michigan","6":"DE","7":"Brandon Graham"},{"1":"35454","2":"6-5","3":"275","4":"1989-01-01","5":"South Florida","6":"DE","7":"Jason Pierre-Paul"},{"1":"35459","2":"5-10","3":"185","4":"1988-04-10","5":"Alabama","6":"SS","7":"Kareem Jackson"},{"1":"35462","2":"6-5","3":"314","4":"1989-03-21","5":"Iowa","6":"T","7":"Bryan Bulaga"},{"1":"35466","2":"5-10","3":"195","4":"1987-08-13","5":"Rutgers","6":"FS","7":"Devin McCourty"},{"1":"35470","2":"6-2","3":"254","4":"1988-08-13","5":"Texas Christian","6":"DE","7":"Jerry Hughes"},{"1":"35472","2":"6-5","3":"325","4":"1988-06-06","5":"Indiana","6":"G","7":"Rodger Saffold"},{"1":"35481","2":"6-6","3":"265","4":"1989-05-14","5":"Arizona","6":"TE","7":"Rob Gronkowski"},{"1":"35485","2":"6-4","3":"329","4":"1988-10-10","5":"East Carolina","6":"NT","7":"Linval Joseph"},{"1":"35493","2":"6-6","3":"285","4":"1989-02-28","5":"Florida","6":"OLB","7":"Carlos Dunlap"},{"1":"35521","2":"5-11","3":"180","4":"1987-03-17","5":"Southern Methodist","6":"WR","7":"Emmanuel Sanders"},{"1":"35522","2":"6-3","3":"335","4":"1988-06-08","5":"Kentucky","6":"DT","7":"Corey Peters"},{"1":"35527","2":"5-11","3":"195","4":"1988-01-09","5":"Citadel","6":"WR","7":"Andre Roberts"},{"1":"35534","2":"6-7","3":"265","4":"1986-11-24","5":"Miami","6":"TE","7":"Jimmy Graham"},{"1":"35539","2":"6-3","3":"273","4":"1987-12-22","5":"Southern California","6":"DE","7":"Everson Griffen"},{"1":"35562","2":"6-4","3":"330","4":"1987-03-25","5":"Louisiana State","6":"DT","7":"Al Woods"},{"1":"35634","2":"5-10","3":"185","4":"07/10/1988","5":"Central Michigan","6":"WR","7":"Antonio Brown"},{"1":"36712","2":"6-1","3":"210","4":"1987-09-09","5":"Rice","6":"FS","7":"Andrew Sendejo"},{"1":"36785","2":"6-8","3":"330","4":"1985-10-27","5":"Texas State","6":"T","7":"Ty Nsekhe"},{"1":"37075","2":"6-3","3":"250","4":"1989-03-26","5":"Texas A&amp;amp;M","6":"OLB","7":"Von Miller"},{"1":"37077","2":"6-4","3":"210","4":"1988-07-31","5":"Georgia","6":"WR","7":"A.J. Green"},{"1":"37078","2":"6-1","3":"203","4":"1990-07-11","5":"Louisiana State","6":"CB","7":"Patrick Peterson"},{"1":"37079","2":"6-3","3":"220","4":"1989-02-08","5":"Alabama","6":"WR","7":"Julio Jones"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+# Data: PFF scouting
+
+`pffScoutingData.csv`: PFF charted info about players in play (since BDB 2022) 
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["gameId"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["playId"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["nflId"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["pff_role"],"name":[4],"type":["chr"],"align":["left"]},{"label":["pff_positionLinedUp"],"name":[5],"type":["chr"],"align":["left"]},{"label":["pff_hit"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["pff_hurry"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["pff_sack"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["pff_beatenByDefender"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["pff_hitAllowed"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["pff_hurryAllowed"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["pff_sackAllowed"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["pff_nflIdBlockedPlayer"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["pff_blockType"],"name":[14],"type":["chr"],"align":["left"]},{"label":["pff_backFieldBlock"],"name":[15],"type":["dbl"],"align":["right"]}],"data":[{"1":"2021090900","2":"97","3":"25511","4":"Pass","5":"QB","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"35481","4":"Pass Route","5":"TE-L","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"35634","4":"Pass Route","5":"LWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"39985","4":"Pass Route","5":"HB-R","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"40151","4":"Pass Block","5":"C","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"44955","14":"SW","15":"0"},{"1":"2021090900","2":"97","3":"41233","4":"Pass Route","5":"RWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"41263","4":"Pass Rush","5":"LEO","6":"0","7":"1","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"42377","4":"Pass Block","5":"LT","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"1","12":"0","13":"42403","14":"PP","15":"0"},{"1":"2021090900","2":"97","3":"42403","4":"Pass Rush","5":"ROLB","6":"0","7":"1","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"42404","4":"Pass Block","5":"LG","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"44955","14":"PP","15":"0"},{"1":"2021090900","2":"97","3":"43306","4":"Coverage","5":"ROLB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"43478","4":"Coverage","5":"RCB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"44896","4":"Pass Route","5":"SLWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"44904","4":"Coverage","5":"SCBR","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"44955","4":"Pass Rush","5":"DRT","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"44962","4":"Coverage","5":"FS","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"46163","4":"Pass Block","5":"RG","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"1","12":"0","13":"53441","14":"SW","15":"0"},{"1":"2021090900","2":"97","3":"47996","4":"Coverage","5":"LILB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"52421","4":"Pass Block","5":"RT","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"1","12":"0","13":"53441","14":"PP","15":"0"},{"1":"2021090900","2":"97","3":"52459","4":"Coverage","5":"LCB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"53441","4":"Pass Rush","5":"LILB","6":"0","7":"1","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"97","3":"53504","4":"Pass Rush","5":"RE","6":"0","7":"1","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"35441","4":"Pass Rush","5":"DRT","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"35454","4":"Pass Rush","5":"ROLB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"37082","4":"Pass Block","5":"LT","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"35454","14":"PT","15":"0"},{"1":"2021090900","2":"137","3":"38588","4":"Coverage","5":"RLB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"40074","4":"Pass Rush","5":"LEO","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"41915","4":"Coverage","5":"SCBoL","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"42347","4":"Pass Route","5":"SLWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"42654","4":"Pass Block","5":"RT","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"40074","14":"PP","15":"0"},{"1":"2021090900","2":"137","3":"43293","4":"Pass Route","5":"RWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"43424","4":"Pass","5":"QB","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"45532","4":"Pass Route","5":"SRoWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"46081","4":"Pass Rush","5":"DLT","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"46119","4":"Pass Block","5":"LG","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"35441","14":"SW","15":"0"},{"1":"2021090900","2":"137","3":"46132","4":"Coverage","5":"LCB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"46206","4":"Pass Route","5":"SRiWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"47788","4":"Coverage","5":"SCBiL","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"47822","4":"Coverage","5":"RCB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"47873","4":"Pass Block","5":"RG","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"46081","14":"PP","15":"0"},{"1":"2021090900","2":"137","3":"52425","4":"Pass Route","5":"LWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"52453","4":"Coverage","5":"FS","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"137","3":"52554","4":"Pass Block","5":"C","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"35441","14":"PP","15":"0"},{"1":"2021090900","2":"137","3":"53461","4":"Pass Rush","5":"SCBR","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"187","3":"35441","4":"Pass Rush","5":"LILB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"187","3":"35454","4":"Pass Rush","5":"REO","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"187","3":"37082","4":"Pass Block","5":"LT","6":"NA","7":"NA","8":"NA","9":"0","10":"0","11":"0","12":"0","13":"35454","14":"PP","15":"0"},{"1":"2021090900","2":"187","3":"38588","4":"Pass Rush","5":"RILB","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"187","3":"41915","4":"Coverage","5":"SCBiL","6":"0","7":"0","8":"0","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"},{"1":"2021090900","2":"187","3":"42347","4":"Pass Route","5":"RWR","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA","15":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+# Data: tracking data
+
+`week[i].csv`: tracking data for week  `i` `\(\in [1:8]\)` during 2021 NFL regular season
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["gameId"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["playId"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["nflId"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["frameId"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["time"],"name":[5],"type":["dttm"],"align":["right"]},{"label":["jerseyNumber"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["team"],"name":[7],"type":["chr"],"align":["left"]},{"label":["playDirection"],"name":[8],"type":["chr"],"align":["left"]},{"label":["x"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["s"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["a"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["dis"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["o"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["dir"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["event"],"name":[16],"type":["chr"],"align":["left"]}],"data":[{"1":"2021101709","2":"1444","3":"47889","4":"1","5":"2021-10-17 21:25:39.9","6":"98","7":"LV","8":"left","9":"67.55","10":"29.87","11":"0.02","12":"0.02","13":"0.01","14":"122.99","15":"103.53","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"2","5":"2021-10-17 21:25:40.0","6":"98","7":"LV","8":"left","9":"67.55","10":"29.88","11":"0.02","12":"0.02","13":"0.01","14":"124.14","15":"97.48","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"3","5":"2021-10-17 21:25:40.0","6":"98","7":"LV","8":"left","9":"67.56","10":"29.88","11":"0.02","12":"0.02","13":"0.01","14":"124.14","15":"97.47","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"4","5":"2021-10-17 21:25:40.2","6":"98","7":"LV","8":"left","9":"67.58","10":"29.88","11":"0.02","12":"0.02","13":"0.02","14":"123.16","15":"94.31","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"5","5":"2021-10-17 21:25:40.2","6":"98","7":"LV","8":"left","9":"67.60","10":"29.89","11":"0.04","12":"0.24","13":"0.02","14":"121.75","15":"86.26","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"6","5":"2021-10-17 21:25:40.4","6":"98","7":"LV","8":"left","9":"67.64","10":"29.89","11":"0.15","12":"0.98","13":"0.04","14":"123.07","15":"83.96","16":"autoevent_ballsnap"},{"1":"2021101709","2":"1444","3":"47889","4":"7","5":"2021-10-17 21:25:40.5","6":"98","7":"LV","8":"left","9":"67.68","10":"29.89","11":"0.34","12":"1.57","13":"0.04","14":"124.86","15":"88.21","16":"ball_snap"},{"1":"2021101709","2":"1444","3":"47889","4":"8","5":"2021-10-17 21:25:40.5","6":"98","7":"LV","8":"left","9":"67.76","10":"29.89","11":"0.69","12":"2.13","13":"0.08","14":"124.07","15":"89.59","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"9","5":"2021-10-17 21:25:40.7","6":"98","7":"LV","8":"left","9":"67.87","10":"29.88","11":"1.16","12":"3.16","13":"0.12","14":"126.43","15":"93.18","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"10","5":"2021-10-17 21:25:40.7","6":"98","7":"LV","8":"left","9":"68.02","10":"29.87","11":"1.56","12":"2.86","13":"0.15","14":"129.64","15":"93.22","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"11","5":"2021-10-17 21:25:40.9","6":"98","7":"LV","8":"left","9":"68.23","10":"29.87","11":"2.01","12":"2.58","13":"0.21","14":"128.95","15":"92.38","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"12","5":"2021-10-17 21:25:41.0","6":"98","7":"LV","8":"left","9":"68.49","10":"29.85","11":"2.48","12":"2.20","13":"0.26","14":"125.30","15":"92.51","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"13","5":"2021-10-17 21:25:41.0","6":"98","7":"LV","8":"left","9":"68.79","10":"29.85","11":"2.87","12":"1.88","13":"0.30","14":"125.30","15":"91.85","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"14","5":"2021-10-17 21:25:41.2","6":"98","7":"LV","8":"left","9":"69.12","10":"29.86","11":"3.16","12":"1.36","13":"0.33","14":"126.26","15":"89.93","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"15","5":"2021-10-17 21:25:41.2","6":"98","7":"LV","8":"left","9":"69.45","10":"29.87","11":"3.30","12":"0.75","13":"0.33","14":"126.26","15":"88.55","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"16","5":"2021-10-17 21:25:41.4","6":"98","7":"LV","8":"left","9":"69.78","10":"29.89","11":"3.36","12":"0.65","13":"0.34","14":"124.79","15":"86.85","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"17","5":"2021-10-17 21:25:41.5","6":"98","7":"LV","8":"left","9":"70.12","10":"29.94","11":"3.36","12":"0.97","13":"0.34","14":"123.46","15":"83.97","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"18","5":"2021-10-17 21:25:41.5","6":"98","7":"LV","8":"left","9":"70.44","10":"30.00","11":"3.26","12":"1.54","13":"0.33","14":"121.13","15":"80.29","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"19","5":"2021-10-17 21:25:41.7","6":"98","7":"LV","8":"left","9":"70.71","10":"30.07","11":"2.92","12":"2.24","13":"0.27","14":"119.31","15":"76.91","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"20","5":"2021-10-17 21:25:41.7","6":"98","7":"LV","8":"left","9":"70.96","10":"30.13","11":"2.60","12":"2.62","13":"0.26","14":"120.54","15":"74.82","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"21","5":"2021-10-17 21:25:41.9","6":"98","7":"LV","8":"left","9":"71.17","10":"30.17","11":"2.22","12":"2.89","13":"0.22","14":"123.07","15":"75.12","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"22","5":"2021-10-17 21:25:42.0","6":"98","7":"LV","8":"left","9":"71.35","10":"30.21","11":"1.81","12":"3.07","13":"0.18","14":"125.14","15":"75.82","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"23","5":"2021-10-17 21:25:42.0","6":"98","7":"LV","8":"left","9":"71.47","10":"30.20","11":"1.25","12":"3.50","13":"0.12","14":"128.92","15":"84.25","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"24","5":"2021-10-17 21:25:42.2","6":"98","7":"LV","8":"left","9":"71.55","10":"30.17","11":"0.77","12":"4.11","13":"0.08","14":"132.99","15":"105.52","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"25","5":"2021-10-17 21:25:42.2","6":"98","7":"LV","8":"left","9":"71.57","10":"30.12","11":"0.56","12":"3.92","13":"0.06","14":"134.04","15":"156.52","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"26","5":"2021-10-17 21:25:42.4","6":"98","7":"LV","8":"left","9":"71.54","10":"30.05","11":"0.80","12":"3.52","13":"0.08","14":"138.62","15":"201.12","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"27","5":"2021-10-17 21:25:42.5","6":"98","7":"LV","8":"left","9":"71.48","10":"29.97","11":"1.11","12":"2.83","13":"0.10","14":"140.07","15":"217.29","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"28","5":"2021-10-17 21:25:42.5","6":"98","7":"LV","8":"left","9":"71.39","10":"29.88","11":"1.34","12":"2.21","13":"0.12","14":"140.07","15":"225.12","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"29","5":"2021-10-17 21:25:42.7","6":"98","7":"LV","8":"left","9":"71.29","10":"29.78","11":"1.51","12":"1.47","13":"0.14","14":"143.36","15":"229.31","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"30","5":"2021-10-17 21:25:42.7","6":"98","7":"LV","8":"left","9":"71.15","10":"29.69","11":"1.65","12":"0.96","13":"0.17","14":"150.95","15":"233.67","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"31","5":"2021-10-17 21:25:42.9","6":"98","7":"LV","8":"left","9":"71.01","10":"29.59","11":"1.73","12":"0.61","13":"0.17","14":"157.76","15":"236.50","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"32","5":"2021-10-17 21:25:43.0","6":"98","7":"LV","8":"left","9":"70.86","10":"29.49","11":"1.75","12":"0.45","13":"0.18","14":"161.14","15":"237.29","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"33","5":"2021-10-17 21:25:43.0","6":"98","7":"LV","8":"left","9":"70.72","10":"29.38","11":"1.72","12":"0.54","13":"0.18","14":"163.67","15":"236.00","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"34","5":"2021-10-17 21:25:43.2","6":"98","7":"LV","8":"left","9":"70.60","10":"29.26","11":"1.65","12":"0.84","13":"0.17","14":"160.98","15":"231.19","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"35","5":"2021-10-17 21:25:43.2","6":"98","7":"LV","8":"left","9":"70.52","10":"29.11","11":"1.59","12":"1.39","13":"0.17","14":"163.81","15":"217.72","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"36","5":"2021-10-17 21:25:43.4","6":"98","7":"LV","8":"left","9":"70.48","10":"28.95","11":"1.53","12":"1.98","13":"0.16","14":"163.81","15":"202.53","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"37","5":"2021-10-17 21:25:43.5","6":"98","7":"LV","8":"left","9":"70.47","10":"28.77","11":"1.63","12":"2.31","13":"0.18","14":"157.88","15":"187.20","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"38","5":"2021-10-17 21:25:43.5","6":"98","7":"LV","8":"left","9":"70.49","10":"28.58","11":"1.83","12":"2.29","13":"0.20","14":"157.23","15":"175.52","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"39","5":"2021-10-17 21:25:43.7","6":"98","7":"LV","8":"left","9":"70.56","10":"28.36","11":"2.07","12":"2.29","13":"0.22","14":"167.26","15":"165.12","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"40","5":"2021-10-17 21:25:43.7","6":"98","7":"LV","8":"left","9":"70.68","10":"28.10","11":"2.50","12":"2.32","13":"0.29","14":"164.16","15":"156.60","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"41","5":"2021-10-17 21:25:43.9","6":"98","7":"LV","8":"left","9":"70.84","10":"27.81","11":"2.96","12":"2.20","13":"0.33","14":"153.05","15":"151.16","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"42","5":"2021-10-17 21:25:44.0","6":"98","7":"LV","8":"left","9":"71.04","10":"27.49","11":"3.42","12":"1.98","13":"0.38","14":"154.75","15":"147.58","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"43","5":"2021-10-17 21:25:44.0","6":"98","7":"LV","8":"left","9":"71.27","10":"27.18","11":"3.68","12":"1.59","13":"0.38","14":"150.25","15":"144.79","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"44","5":"2021-10-17 21:25:44.2","6":"98","7":"LV","8":"left","9":"71.56","10":"26.84","11":"4.08","12":"1.46","13":"0.45","14":"146.94","15":"140.95","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"45","5":"2021-10-17 21:25:44.2","6":"98","7":"LV","8":"left","9":"71.90","10":"26.51","11":"4.42","12":"1.66","13":"0.48","14":"136.32","15":"137.19","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"46","5":"2021-10-17 21:25:44.4","6":"98","7":"LV","8":"left","9":"72.25","10":"26.18","11":"4.61","12":"1.38","13":"0.47","14":"136.32","15":"134.06","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"47","5":"2021-10-17 21:25:44.5","6":"98","7":"LV","8":"left","9":"72.62","10":"25.87","11":"4.69","12":"1.44","13":"0.48","14":"136.32","15":"131.04","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"48","5":"2021-10-17 21:25:44.5","6":"98","7":"LV","8":"left","9":"72.98","10":"25.58","11":"4.60","12":"1.71","13":"0.46","14":"136.32","15":"128.86","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"49","5":"2021-10-17 21:25:44.7","6":"98","7":"LV","8":"left","9":"73.33","10":"25.31","11":"4.45","12":"2.17","13":"0.45","14":"135.07","15":"126.62","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"50","5":"2021-10-17 21:25:44.7","6":"98","7":"LV","8":"left","9":"73.67","10":"25.06","11":"4.19","12":"2.62","13":"0.42","14":"134.21","15":"125.26","16":"qb_sack"},{"1":"2021101709","2":"1444","3":"47889","4":"51","5":"2021-10-17 21:25:44.9","6":"98","7":"LV","8":"left","9":"73.96","10":"24.84","11":"3.74","12":"3.18","13":"0.36","14":"134.21","15":"125.12","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"52","5":"2021-10-17 21:25:45.0","6":"98","7":"LV","8":"left","9":"74.24","10":"24.65","11":"3.34","12":"3.42","13":"0.34","14":"134.21","15":"124.53","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"53","5":"2021-10-17 21:25:45.0","6":"98","7":"LV","8":"left","9":"74.47","10":"24.48","11":"2.89","12":"3.56","13":"0.29","14":"134.94","15":"124.11","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"54","5":"2021-10-17 21:25:45.2","6":"98","7":"LV","8":"left","9":"74.70","10":"24.33","11":"2.54","12":"3.39","13":"0.27","14":"134.94","15":"123.67","16":"None"},{"1":"2021101709","2":"1444","3":"47889","4":"55","5":"2021-10-17 21:25:45.2","6":"98","7":"LV","8":"left","9":"74.85","10":"24.22","11":"2.09","12":"3.32","13":"0.19","14":"134.94","15":"124.01","16":"None"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+# In real life
+
+&lt;img src="sack.gif" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data prep: Field standardization
+
+--
+
+-   In the raw data, there are 2 play directions (with respect to the offense): left and right
+
+--
+
+-   We need to standardize player tracking coordinates, so that the offense is always moving in the same direction
+
+    - Helpful for feature engineering and modeling
+
+---
+
+# Data prep: Field standardization
+
+&lt;img src="field.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Data prep: Field standardization
+
+.pull-left[
+
+*   First, read in the data 
+
+(Data files are stored in the same directory as the slides' source file)
+
+
+```r
+library(tidyverse)
+theme_set(theme_bw())
+games &lt;- read_csv("games.csv")
+plays &lt;- read_csv("plays.csv")
+players &lt;- read_csv("players.csv")
+pffScoutingData &lt;- read_csv("pffScoutingData.csv")
+tracking &lt;- list.files(pattern = "week") |&gt; 
+  map(read_csv) |&gt; 
+  list_rbind()
+```
+]
+
+.pull-right[
+
+*   Make all plays go from left to right, then flip player direction and orientation 
+
+
+```r
+tracking &lt;- tracking |&gt;
+  mutate(
+    # make all plays go from left to right
+    x = ifelse(playDirection == "left", 120 - x, x),
+    y = ifelse(playDirection == "left", 160 / 3 - y, y),
+    # flip player direction and orientation
+    dir = ifelse(playDirection == "left", dir + 180, dir),
+    dir = ifelse(dir &gt; 360, dir - 360, dir),
+    o = ifelse(playDirection == "left", o + 180, o),
+    o = ifelse(o &gt; 360, o - 360, o)
+  )
+```
+
+]
+
+---
+
+# Visualizing tracking data
+
+*   Tip: pick out an example play as a case study throughout the project
+
+*   First, set up the field background with `sportyR`
+
+.pull-left[
+
+```r
+library(sportyR)
+field_params &lt;- list(field_apron = "springgreen3",
+                     field_border = "springgreen3",
+                     offensive_endzone = "springgreen3",
+                     defensive_endzone = "springgreen3",
+                     offensive_half = "springgreen3",
+                     defensive_half = "springgreen3")
+nfl_field &lt;- geom_football(league = "nfl",
+                           display_range = "in_bounds_only",
+                           x_trans = 60,
+                           y_trans = 26.6667,
+                           xlims = c(35, 85),
+                           color_updates = field_params)
+nfl_field
+```
+]
+
+.pull-right[
+
+
+
+
+&lt;img src="sportyr_field.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+
+# Visualizing tracking data
+
+*   Play animation with `gganimate`
+
+*   Note that a new column with colors for each team has been added to the data
+
+.pull-left[
+
+
+
+
+
+```r
+example_play &lt;- tracking |&gt; 
+  filter(gameId == 2021101709, playId == 1444) |&gt; 
+  mutate(pt_color = case_when(team == "DEN" ~ "navy",
+                              team == "LV" ~ "white",
+                              team == "football" ~ "yellow"))
+library(gganimate)
+nfl_field +
+  geom_point(data = example_play,
+             aes(120 - x, 160 / 3 - y),
+             size = 3,
+             color = example_play$pt_color) +
+  transition_time(example_play$frameId)
+```
+]
+
+.pull-right[
+
+&lt;img src="sportyr_play.gif" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+
+count: false
+
+class: center, middle
+
+&lt;p style="font-size:3em; color: #C41230"&gt;
+&lt;b&gt;
+Metric Formulation
+&lt;/b&gt;
+&lt;/p&gt;
+
+---
+
+# Metric background
+
+GOAL: Create a metric to evaluate pass rushers in the NFL
+
+Performance metrics based on tracking data can be classified into two types:
+
+*   directly-derived - directly calculated from data
+
+*   model-based - estimated through statistical model or algorithm
+
+**Our proposed metric is directly-derived**
+
+Check out this review paper on [Player Tracking Data in Sports](https://www.annualreviews.org/doi/pdf/10.1146/annurev-statistics-033021-110117)
+
+---
+
+# Related links
+
+.pull-left[
+
+[Link](https://www.kaggle.com/code/statsinthewild/strain-sacks-tackles-rushing-aggression-index) to Kaggle notebook
+
+&lt;img src="kaggle.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+.pull-right[
+
+[Link](https://arxiv.org/pdf/2305.10262.pdf) to paper
+
+&lt;img src="abstract.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# Metric brainstorming
+
+How do we measure pass rusher effectiveness?
+
+* Distance to QB
+
+* Speed towards QB
+
+--
+
+Think simple... Ideally, this measure should increase as speed increases and distance decreases. Consider speed divided by distance.
+
+---
+
+# football meets materials science
+
+&lt;img src="analogy2.png" width="110%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+
+# football meets materials science
+
+&lt;img src="analogy3.png" width="110%" style="display: block; margin: auto;" /&gt;
+
+---
+
+count: false
+
+# football meets materials science
+
+&lt;img src="analogy4.png" width="110%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# measuring pressure at the frame-level
+
+**Definition** ( `\(\text{STRAIN}\)`; informal)
+
+For every pass rusher at each frame within a play, calculate
+
+--
+
+*   Distance between pass rusher and QB
+
+--
+
+*   Velocity at which pass rusher is moving toward QB
+
+--
+
+    *   estimated by rate of change in distance between current &amp; previous frames
+
+    *   `\(\displaystyle \frac{\text{change in distance}}{\text{change in time}} = \frac{\text{current frame's distance} - \text{previous frame's distance}}{0.1}\)`
+
+--
+
+*   `\(\text{STRAIN} = \displaystyle \frac{-\text{velocity}}{\text{distance}}\)`
+
+
+---
+
+# Advantages of STRAIN
+
+*   Simple, computation friendly: 2 features!
+
+--
+
+*   Interpretable: 1/STRAIN &lt;br&gt; `\(\rightarrow\)` time required for a pass rusher to get to QB with current velocity &amp; distance
+
+--
+
+*   Continuous-time within-play metric
+
+    *   Previous metrics are either discrete or based on subjective judgment
+
+---
+
+# Implementing STRAIN
+
+What are the steps?
+
+* Filter data to keep only frames between ball snap and a QB event (e.g., sack, pass forward, etc.)
+
+* Identify locations of passer and pass rusher within each play
+
+* Calculate distance and velocity, then STRAIN
+
+---
+
+# Implementing STRAIN
+
+* Identify the starting and ending events, then collect the first observed start and end frames for each play
+
+
+```r
+tracking_start_end &lt;- tracking |&gt;
+  distinct(gameId, playId, frameId, event) |&gt;
+  mutate(is_start = as.numeric(event %in% c("autoevent_ballsnap", "ball_snap")),
+         is_end = as.numeric(event %in% c("fumble", "handoff", "lateral", "autoevent_passforward", 
+                                          "pass_forward", "qb_sack", "qb_strip_sack", "run"))) |&gt;
+  group_by(gameId, playId) |&gt;
+  mutate(any_start = any(is_start == 1), any_end = any(is_end == 1)) |&gt;
+  filter(any_start, any_end) |&gt;
+  summarize(start_frame = frameId[which(is_start == 1)[1]],
+            end_frame = frameId[which(is_end == 1 &amp; frameId &gt; start_frame)[1]]) |&gt;
+  ungroup()
+```
+
+* Join with tracking data and filter frames
+
+
+```r
+tracking &lt;- tracking |&gt;
+  left_join(tracking_start_end, by = c("gameId", "playId")) |&gt;
+  filter(!is.na(start_frame), !is.na(end_frame),
+         frameId &gt;= start_frame, frameId &lt;= end_frame) |&gt;
+  mutate(frameId_corrected = frameId - start_frame)
+```
+
+
+---
+
+# Implementing STRAIN
+
+* Use PFF scouting data to identify player role for each play
+
+
+```r
+tracking_roles &lt;- tracking |&gt;
+  left_join(pffScoutingData, by = c("gameId", "playId", "nflId"))
+```
+
+* Get passer location for every frame of each play
+
+
+```r
+tracking_qb &lt;- tracking_roles |&gt;
+  filter(pff_role == "Pass", pff_positionLinedUp == "QB") |&gt;
+  select(gameId, playId, frameId, x_qb = x, y_qb = y) 
+```
+
+---
+
+# Implementing STRAIN
+
+* Get pass rusher location, then join with passer location, and compute the two features distance and velocity
+
+
+```r
+tracking_pass_rush &lt;- tracking_roles |&gt;
+  filter(pff_role == "Pass Rush") |&gt;
+  left_join(tracking_qb) |&gt;
+  group_by(gameId, playId, nflId) |&gt;
+  mutate(d_qb = sqrt((x - x_qb) ^ 2 + (y - y_qb) ^ 2),
+         v_qb = -(d_qb - lag(d_qb)) / 0.1,
+         strain = v_qb / d_qb) |&gt;
+  ungroup()
+```
+
+`tracking_pass_rush` will be the main data frame with pass rusher info including STRAIN
+
+---
+
+count: false
+
+class: center, middle
+
+&lt;p style="font-size:3em; color: #C41230"&gt;
+&lt;b&gt;
+Presenting Results
+&lt;/b&gt;
+&lt;/p&gt;
+
+---
+
+# data viz plan
+
+Goal: The visuals should tell stories and provide takeaway messages
+
+--
+
+*   Viz 1: Updated version of animation for example play
+
+    *   Point size for each pass rusher represent their STRAIN at each frame
+
+    *   Highlight focused player (M. Crosby) with a different color
+    
+--
+
+*   Viz 2: How do the feature (distance, velocity, STRAIN) for M. Crosby interact within the play?
+
+    *   Line graph showing how each feature change as the play evolves
+
+&lt;!-- these 2 viz should compliment each other --&gt;
+
+---
+
+# example play animation
+
+- Update original figure with STRAIN values for pass rushers
+
+- Also adjust color and size of each player on the field
+
+
+```r
+example_pass_rush &lt;- tracking_pass_rush |&gt;
+  filter(gameId == 2021101709, playId == 1444, !is.na(strain))
+
+example_play_strain &lt;- example_play |&gt;
+  left_join(select(example_pass_rush, gameId:frameId, strain)) |&gt;
+  mutate(
+    pt_color = ifelse(nflId != 47889, pt_color, "maroon"),
+    pt_color = ifelse(team != "football", pt_color, "yellow"),
+    pt_size = ifelse(is.na(strain), 3, scales::rescale(strain, to = c(3, 8), from = range(example_pass_rush$strain))),
+    pt_size = ifelse(team == "football", 2, pt_size)
+  )
+```
+
+---
+
+# example play animation
+
+.pull-left[
+
+
+```r
+nfl_field +
+  geom_point(data = example_play_strain,
+             aes(120 - x, 160 / 3 - y),
+             size = example_play_strain$pt_size,
+             color = example_play_strain$pt_color) +
+  transition_time(example_play_strain$frameId)
+```
+
+]
+
+.pull-right[
+
+&lt;img src="sportyr_strain.gif" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+
+# feature curves
+
+.pull-left[
+
+
+```r
+example_pass_rush |&gt;
+  filter(nflId == 47889) |&gt;
+  pivot_longer(cols = c(d_qb, v_qb, strain),
+               names_to = "feature",
+               values_to = "value") |&gt;
+  mutate(
+    feature = fct_relevel(feature, "strain", after = Inf),
+    feature = fct_recode(feature,
+                         "Distance" = "d_qb",
+                         "Velocity" = "v_qb",
+                         "STRAIN" = "strain")
+  ) |&gt;
+  ggplot(aes(frameId_corrected, value, color = feature)) +
+  geom_line(linewidth = 1.5) +
+  scale_color_manual(
+    values = c("blue", "orange", "maroon")
+  ) +
+  labs(x = "Number of frames since snap",
+       y = "Feature value",
+       color = NULL)
+```
+
+]
+
+.pull-right[
+
+&lt;img src="features.png" width="99%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+
+# Bonus: combining animation
+
+Check out this [GitHub wiki](https://github.com/thomasp85/gganimate/wiki/Animation-Composition)
+
+---
+
+&lt;img src="https://raw.githubusercontent.com/qntkhvn/strain/main/figures/example_play.gif" width="61%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+count: false
+
+class: center, middle
+
+&lt;p style="font-size:3em; color: #C41230"&gt;
+&lt;b&gt;
+Metric Validation
+&lt;/b&gt;
+&lt;/p&gt;
+
+---
+
+# Does the metric actually make sense?
+
+--
+
+-   How does STRAIN differ across different positions? Play outcomes (sack, hit, hurry, none)? 
+
+--
+
+-   Who are the top players according to the metric? Does it pass the "eye test"?
+
+--
+
+-   How does the metric relate to previous metrics?
+
+--
+
+-   Is the metric stable over time?
+
+--
+
+Check out [this paper](https://arxiv.org/abs/1609.09830) on "meta-analytics" by Franks et al. (2017)
+
+--
+
+---
+
+# Positional STRAIN curves
+
+edge (OLBs and DEs) vs interior (DTs and NTs)
+
+Join with `players` to get information about position
+
+.pull-left[
+
+
+```r
+tracking_pass_rush |&gt; 
+  left_join(players) |&gt;
+  filter(
+    frameId_corrected &lt;= 40,
+    officialPosition %in% c("OLB", "DE", "DT", "NT")
+  ) |&gt; 
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT")
+  ) |&gt;
+  group_by(frameId_corrected, officialPosition) |&gt; 
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE)) |&gt; 
+  ggplot(aes(frameId_corrected, avg_strain, 
+             color = officialPosition)) +
+  geom_smooth(se = FALSE, span = 0.3, linewidth = 1) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Number of frames since snap",
+       y = "Average STRAIN",
+       color = "Position")
+```
+]
+
+.pull-right[
+
+&lt;img src="pos.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+
+# Play outcome STRAIN curves
+
+.pull-left[
+
+* Determine whether a player recorded a sack, hit, hurry, or none for each play
+
+
+```r
+pff_outcomes &lt;- pffScoutingData |&gt; 
+  group_by(gameId, playId, nflId) |&gt; 
+  summarize(i_hit = sum(pff_hit, na.rm = TRUE) &gt; 0,
+            i_hurry = sum(pff_hurry, na.rm = TRUE) &gt; 0 ,
+            i_sack = sum(pff_sack, na.rm = TRUE) &gt; 0,
+            i_none = (i_hit + i_hurry + i_sack) == 0) |&gt; 
+  ungroup() |&gt; 
+  pivot_longer(i_hit:i_none,
+               names_to = "outcome",
+               names_prefix = "i_",
+               values_to = "value") |&gt; 
+  filter(value)
+```
+
+]
+
+.pull-right[
+
+* Plot STRAIN curves faceted by outcome
+
+
+```r
+tracking_pass_rush |&gt; left_join(pff_outcomes) |&gt; 
+  left_join(players) |&gt;
+  filter(frameId_corrected &lt;= 40,
+         officialPosition %in% c("OLB", "DE", "DT", "NT")
+  ) |&gt; 
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT"),
+         outcome = fct_relevel(outcome, 
+                          "sack", "hit", "hurry", "none")
+  ) |&gt;
+  group_by(frameId_corrected, outcome, officialPosition) |&gt; 
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE)) |&gt; 
+  ggplot(aes(frameId_corrected, avg_strain, 
+             color = officialPosition)) +
+  geom_smooth(se = FALSE, span = 0.3, linewidth = 1) +
+  facet_wrap(~ outcome, nrow = 1) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Number of frames since snap",
+       y = "Average STRAIN",
+       color = "Position") +
+  theme(legend.position = "bottom")
+```
+
+
+]
+
+---
+
+# Play outcome STRAIN curves
+
+&lt;br&gt;
+
+&lt;img src="outcomes.png" width="95%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Ranking the best pass rushers
+
+Goal: obtain a leaderboard of the top-performing pass rushers based on the average STRAIN across all frames played
+
+--
+
+Note: we will consider players with at least 100 snaps played as pass rushers
+
+
+
+---
+
+# Ranking the best pass rushers
+
+Get players with at least 100 snaps played as pass rushers
+
+
+```r
+pass_rushers_eval &lt;- pffScoutingData |&gt;
+  filter(pff_role == "Pass Rush") |&gt;
+  group_by(nflId) |&gt;
+  summarize(snaps = n_distinct(gameId, playId)) |&gt;
+  filter(snaps &gt;= 100)
+```
+
+Calculate average STRAIN and output a table
+
+
+```r
+tracking_pass_rush |&gt;
+  filter(nflId %in% pass_rushers_eval$nflId, !is.infinite(strain)) |&gt;
+  group_by(nflId) |&gt;
+  summarize(avg_strain = round(10 * mean(strain, na.rm = TRUE), 3),
+            snaps = n_distinct(gameId, playId)) |&gt;
+  left_join(players) |&gt;
+  select(Player = displayName,
+         Position = officialPosition,
+         Snaps = snaps,
+         "Average STRAIN" = avg_strain) |&gt;
+  DT::datatable(rownames = FALSE, filter = "top")
+```
+
+---
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0b9c11b1610cd34c5a46" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0b9c11b1610cd34c5a46">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"99\" data-max=\"263\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-0.515\" data-max=\"2.77\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Calais Campbell","Ndamukong Suh","Jason Pierre-Paul","Jerry Hughes","Linval Joseph","Carlos Dunlap","Everson Griffen","Al Woods","Von Miller","J.J. Watt","Robert Quinn","Cameron Jordan","Cameron Heyward","Justin Houston","Mario Addison","Fletcher Cox","Michael Brockers","Melvin Ingram","Chandler Jones","Whitney Mercilus","Malik Jackson","Sheldon Richardson","Star Lotulelei","Johnathan Hankins","Alex Okafor","William Gholston","Steven Means","Nicholas Williams","Jadeveon Clowney","Khalil Mack","Aaron Donald","DaQuan Jones","Shelby Harris","Kerry Hyder","Shaquil Barrett","Denico Autry","Dante Fowler","Leonard Williams","Arik Armstead","Bud Dupree","Malcom Brown","Preston Smith","Markus Golden","Randy Gregory","Frank Clark","Danielle Hunter","Angelo Blackson","Trey Flowers","Grady Jarrett","Christian Covington","Rakeem Nunez-Roches","Joey Bosa","DeForest Buckner","Leonard Floyd","Sheldon Rankins","Shaq Lawson","Kenny Clark","Emmanuel Ogbah","Chris Jones","Austin Johnson","Jarran Reed","Maliek Collins","Yannick Ngakoue","Javon Hargrave","Dean Lowry","Matt Judon","Quinton Jefferson","Matt Ioannidis","D.J. Reader","Morgan Fox","Myles Garrett","Solomon Thomas","Haason Reddick","Derek Barnett","Jonathan Allen","Charles Harris","Takkarist McKinley","T.J. Watt","Malik McDowell","Tyus Bowser","Dalvin Tomlinson","Tanoh Kpassagnon","Larry Ogunjobi","Dawuane Smoot","Chris Wormley","Tarell Basham","Trey Hendrickson","Deatrich Wise","Grover Stewart","Davon Godchaux","Al-Quadin Muhammad","D.J. Jones","Josh Tupou","Adam Butler","Vita Vea","Daron Payne","Harold Landry","Uchenna Nwosu","Tyquan Lewis","Lorenzo Carter","B.J. Hill","Sam Hubbard","Rasheem Green","Josh Sweat","John Franklin-Myers","Bilal Nichols","Folorunso Fatukasi","Jacob Martin","Sebastian Joseph","Poona Ford","Nick Bosa","Quinnen Williams","Josh Allen","Ed Oliver","Rashan Gary","Christian Wilkins","Brian Burns","Dexter Lawrence","Jeffery Simmons","Montez Sweat","Jerry Tillery","Zach Allen","Dre'Mont Jones","Maxx Crosby","Greg Gaines","Kingsley Keke","Charles Omenihu","Malik Reed","Chase Young","Derrick Brown","Darrell Taylor","Josh Uche","Terrell Lewis","Alex Highsmith","D.J. Wonnum","Michael Danna","Tershawn Wharton","Bryce Huff","Micah Parsons","Jaelan Phillips","Kwity Paye","Gregory Rousseau","Odafe Oweh","Joe Tryon","Christian Barmore","Azeez Ojulari","Osa Odighizuwa","Cameron Sample"],["DE","DE","DE","DE","NT","OLB","DE","DT","OLB","DE","OLB","DE","DT","OLB","DE","DT","DE","OLB","OLB","DE","DT","DT","DT","NT","DE","DE","OLB","DE","DE","OLB","DT","DT","DE","DE","OLB","DE","OLB","DT","DE","OLB","DT","OLB","OLB","DE","DE","DE","DT","OLB","DT","NT","DT","OLB","DT","OLB","DT","DE","NT","DE","DT","NT","DT","DT","DE","DT","DE","OLB","DT","DT","NT","DE","DE","DT","OLB","DE","DT","OLB","DE","OLB","DT","OLB","DT","DE","DT","DE","DE","DE","DE","DE","DT","NT","DE","DT","NT","DE","NT","DT","OLB","OLB","DE","OLB","DT","DE","DE","DE","DE","DE","DT","DE","NT","NT","DE","NT","OLB","DT","OLB","DT","DE","DE","DT","DE","DT","DE","DE","DE","NT","DE","DE","OLB","DE","DT","DE","OLB","OLB","OLB","DE","DE","DT","DE","OLB","OLB","DE","DE","OLB","OLB","DT","OLB","DT","DE"],[193,210,183,133,117,154,168,130,159,188,146,223,199,138,113,175,132,123,163,129,194,128,109,120,124,124,138,133,172,142,259,133,159,168,220,207,113,244,172,125,115,136,179,146,114,199,111,102,185,124,99,179,217,200,155,126,238,227,150,129,170,139,198,169,149,189,161,147,163,147,208,127,187,159,218,144,120,155,159,108,126,111,213,155,161,144,216,133,136,120,177,100,101,193,195,233,221,124,171,124,136,237,198,166,167,152,121,130,184,161,168,152,166,144,196,154,201,173,263,221,189,115,192,218,120,141,99,198,255,158,112,104,155,136,177,163,118,135,108,171,111,102,172,108,185,166,176,131],[0.549,0.696,1.36,1.753,0.112,2.002,2.3,-0.003,2.601,1.352,2.192,1.708,1.222,2.684,1.908,0.742,0.051,2.379,2.239,1.627,0.907,0.652,0.079,0.053,1.334,0.466,1.652,0.147,1.851,2.418,1.501,0.339,1.066,1.647,2.242,1.773,1.654,0.925,1.16,1.394,-0.447,2.565,2.213,2.389,1.975,2.105,0.919,1.588,0.733,0.589,-0.011,2.269,1.08,2.77,0.899,1.841,0.844,1.956,1.437,-0.225,0.391,0.595,2.51,1.128,0.848,1.974,1.315,0.619,0.315,1.483,2.743,1.425,2.208,2.524,0.677,1.664,2.4,2.675,0.6850000000000001,2.033,0.337,1.343,0.8070000000000001,1.789,1.103,1.523,2.364,0.554,-0.515,-0.352,1.708,-0.327,0.273,0.79,0.862,0.279,2.156,1.991,1.452,1.752,0.85,1.8,1.728,2.583,2.3,0.733,0.146,1.458,0.577,0.499,2.16,0.883,2.204,1.078,2.668,0.342,2.169,0.555,0.829,1.979,1.035,1.509,1.429,2.493,1.056,0.613,1.487,2.257,1.605,0.415,2.627,2.082,2.093,2.653,1.103,1.393,0.535,2.365,2.082,2.297,1.58,2.017,2.213,1.993,0.927,1.691,0.9330000000000001,1.759]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Player<\/th>\n      <th>Position<\/th>\n      <th>Snaps<\/th>\n      <th>Average STRAIN<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+# gt 
+
+`gt` and `gtExtras`
+
+color gradient for metric column
+
+---
+
+&lt;img src="https://raw.githubusercontent.com/qntkhvn/strain/main/figures/player_rankings.png" width="74%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Correlation with existing metrics
+
+Average STRAIN vs pressure rate `\(\left(\displaystyle \frac{\text{Hurries} + \text{Sacks} + \text{Hits}}{\text{Snaps}}\right)\)`
+
+*   Obtain hurries, sacks, hits from PFF scouting data
+
+
+```r
+pff_pressure &lt;- pffScoutingData |&gt;
+  group_by(nflId) |&gt;
+  summarize(hurries = sum(pff_hurry, na.rm = TRUE),
+            sacks = sum(pff_sack, na.rm = TRUE),
+            hits = sum(pff_hit, na.rm = TRUE))
+```
+
+---
+
+# Correlation with existing metrics
+
+.pull-left[
+
+*   Join with tracking data and calculate pressure rate
+
+
+```r
+strain_pressure &lt;- tracking_pass_rush |&gt;
+  filter(nflId %in% pass_rushers_eval$nflId, 
+         !is.infinite(strain)) |&gt;
+  group_by(nflId) |&gt;
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE),
+            snaps = n_distinct(gameId, playId)) |&gt;
+  left_join(pff_pressure) |&gt;
+  mutate(pressure_rate = (hurries + sacks + hits) / snaps)
+
+strain_pressure |&gt; 
+  slice_head(n = 5)
+```
+
+```
+# A tibble: 5 × 7
+  nflId avg_strain snaps hurries sacks  hits pressure_rate
+  &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+1 33131      0.549   193      13     0     7        0.104 
+2 35441      0.696   210      12     2     5        0.0905
+3 35454      1.36    183      11     2     1        0.0765
+4 35470      1.75    133      24     1     3        0.211 
+5 35485      0.112   117      11     1     1        0.111 
+```
+
+]
+
+.pull-right[
+
+*   Compute correlation
+
+
+```r
+cor(strain_pressure$avg_strain, 
+    strain_pressure$pressure_rate)
+```
+
+```
+[1] 0.6103378
+```
+
+]
+
+---
+
+# Correlation with existing metrics
+
+Scatterplot of pressure rate vs average STRAIN, color coded by position
+
+.pull-left[
+
+
+```r
+strain_pressure |&gt;
+  left_join(players) |&gt;
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT")
+  ) |&gt;
+  ggplot(aes(avg_strain, pressure_rate)) +
+  geom_point(aes(color = officialPosition), size = 2) +
+  geom_smooth(method = "lm", se = FALSE, 
+              color = "darkblue", linewidth = 1.5) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Average STRAIN",
+       y = "Pressure rate",
+       color = "Position")
+```
+
+]
+
+.pull-right[
+
+&lt;img src="predictive.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+
+# stability
+
+Is previous performance predictive of future performance based on the metric? (How much does our metric vary over time?)
+
+*   Season-by-season
+
+*    Correlation between a player’s performance on our metrics in the first and second halves of the provided data (i.e. first 4 weeks vs last 4 weeks)
+
+---
+
+# stability
+
+.pull-left[
+
+*   Obtain average STRAIN for the first and last 4 weeks of the 2021 season
+
+
+```r
+strain_weeks &lt;- tracking_pass_rush |&gt;
+  filter(nflId %in% pass_rushers_eval$nflId, 
+         !is.infinite(strain)) |&gt;
+  left_join(games) |&gt;
+  mutate(i_week = ifelse(week &gt; 4, "last4", "first4")) |&gt;
+  group_by(nflId, i_week) |&gt;
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE)) |&gt;
+  ungroup() |&gt;
+  pivot_wider(names_from = i_week, values_from = avg_strain)
+
+strain_weeks |&gt; 
+  slice_head(n = 5)
+```
+
+```
+# A tibble: 5 × 3
+  nflId first4 last4
+  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 33131  0.445 0.695
+2 35441  0.813 0.574
+3 35454  1.52  1.26 
+4 35470  1.92  1.62 
+5 35485  0.100 0.124
+```
+
+]
+
+.pull-right[
+
+*   Compute correlation
+
+
+```r
+cor(strain_weeks$first4, strain_weeks$last4)
+```
+
+```
+[1] 0.8602751
+```
+
+]
+
+---
+
+# stability
+
+.pull-left[
+
+
+```r
+strain_weeks |&gt;
+  left_join(players) |&gt;
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT")
+  ) |&gt;
+  ggplot(aes(first4, last4)) +
+  geom_point(aes(color = officialPosition), size = 2) +
+  geom_smooth(method = "lm", se = FALSE, 
+              color = "darkblue", linewidth = 1.5) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Average STRAIN (first 4 weeks)",
+       y = "Average STRAIN (last 4 weeks)",
+       color = "Position")
+```
+
+]
+
+.pull-right[
+
+&lt;img src="stable.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+
+# is strain predictive of pressure than pressure itself?
+
+Exercise. Make 2 scatterplots:
+
+*   Pressure rate (first 4 weeks) vs Pressure rate (last 4 weeks)
+
+*   Average STRAIN (first 4 weeks) vs Pressure rate (last 4 weeks)
+
+Which plot depicts a stronger relationship?
+
+---
+
+# is strain predictive of pressure than pressure itself?
+
+The answer is yes, as shown in our paper
+
+&lt;img src="predictability.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+count: false
+
+class: center, middle
+
+&lt;p style="font-size:3em; color: #C41230"&gt;
+&lt;b&gt;
+Multilevel Model
+&lt;/b&gt;
+&lt;/p&gt;
+
+---
+
+# Multilevel model: Specification
+
+- Response: average STRAIN for pass rusher at the play-level
+
+--
+
+- Random effects: pass rusher, pass blocker, defensive team, offensive team
+
+--
+
+- Fixed effects
+  
+  -   Number of blockers involved in a play
+  
+  -   Blocker position (T, C, G, other)
+  
+  -   Rusher position (DE, OLB, DT, NT, interior, secondary)
+  
+  -   Play-context information: down, yards to go, current yardline
+
+---
+
+# Multilevel model: Resampling
+
+--
+
+-   Capture uncertainty in the estimates for the player random effects
+
+--
+
+-   It's unrealistic to bootstrap individual plays
+
+--
+
+-   Instead, bootstrap team drives within games
+
+---
+
+# Multilevel model: Pass rusher rankings
+
+&lt;img src="boot_rank.png" width="76%" style="display: block; margin: auto;" /&gt;
+
+---
+
+---
+
+# Advices
+
+* Do it!
+
+&lt;!-- best data, skill will translate, even if you don't like football --&gt;
+
+* Keep it simple. Don't try to do too much. Focus on a specific topic. (#PutThatInYourXGBoost)
+
+* Think outside the box. Adapt concepts from other fields (physical sciences, etc.)
+
+* Slick data viz is key
+
+* Write (and prune words) as you work
+
+--
+
+&lt;center&gt;
+&lt;p style="font-size:1.2em; color: #C41230"&gt;
+&lt;b&gt;
+Cheers.
+&lt;/b&gt;
+&lt;/p&gt;
+&lt;/center&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
