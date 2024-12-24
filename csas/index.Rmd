@@ -1,0 +1,1367 @@
+---
+title: Building a performance metric with player tracking data
+subtitle: Connecticut Sports Analytics Symposium 2025
+author: Quang Nguyen
+institute: "Department of Statistics & Data Science<br>Carnegie Mellon University"
+date: '`r fontawesome::fa("link")` qntkhvn.netlify.app<br>'
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: [default, "themer.css", "custom.css"]
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width = 9,
+  fig.height = 3.5,
+  fig.retina = 3, 
+  out.width = "100%",
+  cache = FALSE,
+  echo = FALSE,
+  message = FALSE, 
+  warning = FALSE,
+  comment = "",
+  hiline = TRUE,
+  fig.align = "center"
+)
+library(tidyverse)
+library(kableExtra)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_accent(
+  header_font_google = google_font("Bebas Neue"),
+  text_font_google   = google_font("Lato", "400", "400i"),
+  code_font_google   = google_font("Roboto Mono"),
+  text_font_size = "1.35rem",
+  code_font_size = "0.7rem",
+  base_color = "#C41230",
+  extra_fonts = list(
+    google_font("Lato")
+  ),
+  extra_css = list(
+    ".title-slide h1" = list("font-family" = "Lato"),
+    ".title-slide h2" = list("font-family" = "Lato"),
+    ".title-slide h3" = list("font-family" = "Lato")
+  ),
+  outfile = "themer.css"
+)
+```
+
+```{r xaringan-extra, echo=FALSE}
+xaringanExtra::use_clipboard()
+xaringanExtra::use_scribble()
+```
+
+---
+
+# Plan for today
+
+Slides: [bit.ly/csas2025_tracking](https://bit.ly/csas2025_tracking)
+
+--
+
+GOAL: a tutorial on how to build a metric with player tracking data
+
+--
+
+What should you takeaway?
+
+*   NOT necessarily the code (you can always go back and run the code later)
+
+*   focus on the **process** and **concepts**
+
+*   how to present results
+
+--
+
+Focus: American football (NFL)
+
+Case study: Developing a pass rush metric<br>(inspired by a 2023 NFL Big Data Bowl finalist entry)
+
+---
+
+# Outline
+
+*   Player tracking data and NFL Big Data Bowl overview
+
+*   Data overview, preparation, and visualization
+
+*   Metric formulation
+
+*   Metric validation
+
+*   Presentation of results
+
+---
+
+count: false
+
+class: center, middle
+
+<p style="font-size:3em; color: #C41230">
+<b>
+Player tracking data
+</b>
+</p>
+
+---
+
+# How do we evaluate this play?
+
+```{r, out.width="90%"}
+knitr::include_graphics("sack.gif")
+```
+
+---
+
+# It's more than just a sack with player tracking data
+
+```{r, out.width="85%"}
+knitr::include_graphics("play_ini.gif")
+```
+
+---
+
+# NFL Big Data Bowl: Background
+
+* Premier sports analytics competition, focusing on player tracking data
+
+* Data are collected at 10 Hz (10 frames per second) using RFID chips placed in player shoulder pads and ball
+
+* Every year the NFL releases a sample a player tracking data with a competition theme
+
+---
+
+# NFL Big Data Bowl: Themes
+
+* Started in 2019, hosted on Kaggle since 2nd year
+
+    * [2019](https://github.com/nfl-football-ops/Big-Data-Bowl): route combinations + rule changes + speed
+    
+    * [2020](https://www.kaggle.com/competitions/nfl-big-data-bowl-2020): yards gained after receiving a handoff (prediction competition)
+    
+    * [2021](https://www.kaggle.com/competitions/nfl-big-data-bowl-2021): secondary
+    
+    * [2022](https://www.kaggle.com/competitions/nfl-big-data-bowl-2022): special teams
+    
+    * [2023](https://www.kaggle.com/competitions/nfl-big-data-bowl-2023): linemen on pass plays
+    
+    * [2024](https://www.kaggle.com/competitions/nfl-big-data-bowl-2024): tackling
+    
+    * [2025](https://www.kaggle.com/competitions/nfl-big-data-bowl-2025): pre-snap
+    
+---
+
+# NFL Big Data Bowl: Tracks & Prizes
+
+Tracks
+
+*   Undergraduate (formerly "college")
+
+*   Metric (formerly "open")
+
+*   Coaching presentation (since 2023)
+
+--
+
+Prizes
+
+*   $100,000 total prize since 2021
+
+*   Prize distribution may be different for each year
+
+*   For 2025: https://www.kaggle.com/competitions/nfl-big-data-bowl-2025/overview/prizes
+
+---
+
+count: false
+
+class: center, middle
+
+<p style="font-size:3em; color: #C41230">
+<b>
+Data
+</b>
+</p>
+
+---
+
+# Data overview
+
+- What are the provided datasets? (examples from BDB 2023)
+
+  *   Tracking data
+  
+  *   Contextual data (games, plays, players, scouting/charted data)
+
+- Full data dictionary: https://www.kaggle.com/competitions/nfl-big-data-bowl-2023/data
+
+(Note: Data are very similar for BDB 2025)
+
+---
+
+# Data: games
+
+`games.csv`: game info
+
+```{r}
+games <- read_csv("games.csv")
+games |> 
+  head(50) |> 
+  rmarkdown::paged_table()
+```
+
+---
+
+# Data: plays
+
+`plays.csv`: play-level info
+
+```{r}
+plays <- read_csv("plays.csv")
+plays |> 
+  head(50) |> 
+  rmarkdown::paged_table()
+```
+
+---
+
+# Data: players
+
+`players.csv`: player info
+
+```{r}
+players <- read_csv("players.csv")
+players |> 
+  head(50) |> 
+  rmarkdown::paged_table()
+```
+
+---
+
+# Data: Scouting/charted
+
+`pffScoutingData.csv`: PFF charted info about players in play (since BDB 2022) 
+
+```{r}
+pffScoutingData <- read_csv("pffScoutingData.csv")
+pffScoutingData |> 
+  head(50) |> 
+  rmarkdown::paged_table()
+```
+
+---
+
+# Data: tracking data
+
+`week[i].csv`: tracking data for week  `i` $\in [1:8]$ during 2021 NFL regular season
+
+```{r}
+week6 <- read_csv("week6.csv")
+week6 |> 
+  filter(gameId == 2021101709 & playId == 1444 & nflId == 47889) |>
+  rmarkdown::paged_table()
+```
+
+---
+
+# In real life
+
+```{r, out.width="90%"}
+knitr::include_graphics("sack.gif")
+```
+
+---
+
+# Data prep: Field standardization
+
+--
+
+-   In the raw data, there are 2 play directions (with respect to the offense): left and right
+
+--
+
+-   We need to standardize player tracking coordinates, so that the offense is always moving in the same direction
+
+    - Helpful for feature engineering and modeling
+
+---
+
+# Data prep: Field standardization
+
+```{r, out.width="80%"}
+knitr::include_graphics("field.png")
+```
+
+---
+
+# Data prep: Field standardization
+
+.pull-left[
+
+*   First, read in the data 
+
+(Data files are stored in the same directory as the slides' source file)
+
+```{r, echo=TRUE}
+library(tidyverse)
+theme_set(theme_bw())
+games <- read_csv("games.csv")
+plays <- read_csv("plays.csv")
+players <- read_csv("players.csv")
+pffScoutingData <- read_csv("pffScoutingData.csv")
+tracking <- list.files(pattern = "week") |> 
+  map(read_csv) |> 
+  list_rbind()
+```
+]
+
+.pull-right[
+
+*   Make all plays go from left to right, then flip player direction and orientation 
+
+```{r, echo=TRUE}
+tracking <- tracking |>
+  mutate(
+    # make all plays go from left to right
+    x = ifelse(playDirection == "left", 120 - x, x),
+    y = ifelse(playDirection == "left", 160 / 3 - y, y),
+    # flip player direction and orientation
+    dir = ifelse(playDirection == "left", dir + 180, dir),
+    dir = ifelse(dir > 360, dir - 360, dir),
+    o = ifelse(playDirection == "left", o + 180, o),
+    o = ifelse(o > 360, o - 360, o)
+  )
+```
+
+]
+
+---
+
+# Visualizing tracking data
+
+*   Tip: pick out an example play as a case study throughout the project
+
+*   Example play: Raiders vs Broncos (week 6) – T. Bridgewater sacked by M. Crosby
+
+```{r, out.width = "90%"}
+knitr::include_graphics("track.png")
+```
+
+---
+
+# Visualizing tracking data
+
+*   First, set up the field background with `sportyR`
+
+.pull-left[
+```{r, echo=TRUE, eval=FALSE}
+library(sportyR)
+field_params <- list(
+  field_apron = "springgreen3",
+  field_border = "springgreen3",
+  offensive_endzone = "springgreen3",
+  defensive_endzone = "springgreen3",
+  offensive_half = "springgreen3",
+  defensive_half = "springgreen3"
+)
+field_background <- geom_football(
+  league = "nfl",
+  display_range = "in_bounds_only",
+  x_trans = 60,
+  y_trans = 26.6667,
+  xlims = c(35, 85),
+  color_updates = field_params
+)
+field_background
+```
+]
+
+.pull-right[
+
+```{r, eval=TRUE}
+library(sportyR)
+field_params <- list(
+  field_apron = "springgreen3",
+  field_border = "springgreen3",
+  offensive_endzone = "springgreen3",
+  defensive_endzone = "springgreen3",
+  offensive_half = "springgreen3",
+  defensive_half = "springgreen3"
+)
+field_background <- geom_football(
+  league = "nfl",
+  display_range = "in_bounds_only",
+  x_trans = 60,
+  y_trans = 26.6667,
+  xlims = c(35, 85),
+  color_updates = field_params
+)
+```
+
+
+```{r, out.width="70%"}
+knitr::include_graphics("sportyr_field.png")
+```
+
+
+]
+
+
+---
+
+# Visualizing tracking data
+
+*   Play animation with `gganimate`
+
+*   Note that a new column with colors for each team has been added to the data
+
+.pull-left[
+
+```{r}
+example_play <- tracking |> 
+  filter(gameId == 2021101709, playId == 1444) |> 
+  mutate(pt_color = case_when(team == "DEN" ~ "navy",
+                              team == "LV" ~ "white",
+                              team == "football" ~ "yellow"))
+library(gganimate)
+```
+
+
+```{r, echo=TRUE, eval=FALSE}
+example_play <- tracking |> 
+  filter(gameId == 2021101709, playId == 1444) |> 
+  mutate(pt_color = case_when(team == "DEN" ~ "navy",
+                              team == "LV" ~ "white",
+                              team == "football" ~ "yellow"))
+library(gganimate)
+field_background +
+  geom_point(data = example_play,
+             aes(120 - x, 160 / 3 - y),
+             size = 3,
+             color = example_play$pt_color) +
+  transition_time(example_play$frameId)
+```
+]
+
+.pull-right[
+
+```{r, out.width="70%"}
+knitr::include_graphics("sportyr_play.gif")
+```
+
+
+]
+
+---
+
+count: false
+
+class: center, middle
+
+<p style="font-size:3em; color: #C41230">
+<b>
+Metric Formulation
+</b>
+</p>
+
+---
+
+# Metric background
+
+GOAL: Create a metric to evaluate pass rushers in the NFL
+
+--
+
+Performance metrics based on tracking data can be classified into two types:
+
+*   directly-derived - directly calculated from data
+
+*   model-based - estimated through statistical model
+
+--
+
+**Our proposed metric is directly-derived**
+
+Check out this review paper on [Player Tracking Data in Sports](https://www.annualreviews.org/doi/pdf/10.1146/annurev-statistics-033021-110117) by Kovalchik (2023)
+
+
+
+---
+
+# Related links
+
+.pull-left[
+
+[Link](https://www.kaggle.com/code/statsinthewild/strain-sacks-tackles-rushing-aggression-index) to Kaggle notebook
+
+```{r, out.width="95%"}
+knitr::include_graphics("kaggle.png")
+```
+
+
+]
+
+.pull-right[
+
+[Link](https://arxiv.org/pdf/2305.10262.pdf) to paper
+
+```{r, out.width="80%"}
+knitr::include_graphics("abstract.png")
+```
+
+]
+
+---
+
+# Metric brainstorming
+
+How do we measure pass rusher effectiveness?
+
+* Distance to QB
+
+* Speed toward QB
+
+--
+
+Think simple... 
+
+*   Ideally, this measure should increase as speed increases and distance decreases 
+
+*   Consider speed divided by distance
+
+---
+
+# Football meets materials science
+
+```{r, out.width="110%"}
+knitr::include_graphics("analogy2.png")
+```
+
+---
+
+count: false
+
+# Football meets materials science
+
+```{r, out.width="110%"}
+knitr::include_graphics("analogy3.png")
+```
+
+---
+
+count: false
+
+# Football meets materials science
+
+```{r, out.width="110%"}
+knitr::include_graphics("analogy4.png")
+```
+
+---
+
+# Measuring pressure at the frame-level
+
+**Definition** ( $\text{STRAIN}$; informal)
+
+For every pass rusher at each frame within a play, calculate
+
+--
+
+*   $d$: distance between pass rusher and QB
+
+--
+
+*   $v$: velocity at which pass rusher is moving toward QB
+
+--
+
+    *   estimated by rate of change in distance between current & previous frames
+
+    *   $\displaystyle \frac{\text{change in distance}}{\text{change in time}} = \frac{\text{current frame's distance} - \text{previous frame's distance}}{0.1}$
+
+--
+
+*   $\text{STRAIN} = \displaystyle - \frac{v}{d}$
+
+
+---
+
+# Advantages of STRAIN
+
+*   Simple, computation friendly: 2 features! #PutThatInYourXGBoost
+
+--
+
+*   Interpretable: 1/STRAIN <br> $\rightarrow$ time required for a pass rusher to get to QB with current velocity & distance
+
+--
+
+*   Scalable: can be applied to every passing play (minus trick plays)
+
+--
+
+*   Continuous-time within-play metric
+
+    *   Previous metrics are either discrete or based on subjective judgment
+    
+    *   Play-level stats: sacks, hits, and hurries
+    
+    *   Pass rush win rate: uses an arbitrary time thresold to define a pass rush win; converts continuous data to a win-loss indicator
+
+---
+
+# Implementing STRAIN
+
+What are the steps?
+
+* Filter data to keep only frames between ball snap and a QB event (e.g., sack, pass forward, etc.)
+
+* Identify locations of passer and pass rusher within each play
+
+* Calculate distance and velocity, then STRAIN
+
+---
+
+# Implementing STRAIN
+
+* Identify the starting and ending events, then collect the first observed start and end frames for each play
+
+```{r, echo=TRUE}
+tracking_start_end <- tracking |>
+  distinct(gameId, playId, frameId, event) |>
+  mutate(is_start = as.numeric(event %in% c("autoevent_ballsnap", "ball_snap")),
+         is_end = as.numeric(event %in% c("fumble", "handoff", "lateral", "autoevent_passforward", 
+                                          "pass_forward", "qb_sack", "qb_strip_sack", "run"))) |>
+  group_by(gameId, playId) |>
+  mutate(any_start = any(is_start == 1), any_end = any(is_end == 1)) |>
+  filter(any_start, any_end) |>
+  summarize(start_frame = frameId[which(is_start == 1)[1]],
+            end_frame = frameId[which(is_end == 1 & frameId > start_frame)[1]]) |>
+  ungroup()
+```
+
+* Join with tracking data and filter frames
+
+```{r, echo=TRUE}
+tracking <- tracking |>
+  left_join(tracking_start_end, by = c("gameId", "playId")) |>
+  filter(!is.na(start_frame), !is.na(end_frame),
+         frameId >= start_frame, frameId <= end_frame) |>
+  mutate(frameId_corrected = frameId - start_frame)
+```
+
+
+---
+
+# Implementing STRAIN
+
+* Use PFF scouting data to identify player role for each play
+
+```{r, echo=TRUE}
+tracking_roles <- tracking |>
+  left_join(pffScoutingData, by = c("gameId", "playId", "nflId"))
+```
+
+* Get passer location for every frame of each play
+
+```{r, echo=TRUE}
+tracking_qb <- tracking_roles |>
+  filter(pff_role == "Pass", pff_positionLinedUp == "QB") |>
+  select(gameId, playId, frameId, x_qb = x, y_qb = y) 
+```
+
+---
+
+# Implementing STRAIN
+
+* Get pass rusher location, then join with passer location, and compute the two features distance and velocity
+
+```{r, echo=TRUE}
+tracking_pass_rush <- tracking_roles |>
+  filter(pff_role == "Pass Rush") |>
+  left_join(tracking_qb) |>
+  group_by(gameId, playId, nflId) |>
+  mutate(d_qb = sqrt((x - x_qb) ^ 2 + (y - y_qb) ^ 2),
+         v_qb = -(d_qb - lag(d_qb)) / 0.1,
+         strain = v_qb / d_qb) |>
+  ungroup()
+```
+
+`tracking_pass_rush` will be the main data frame with pass rusher info including STRAIN
+
+---
+
+count: false
+
+class: center, middle
+
+<p style="font-size:3em; color: #C41230">
+<b>
+Presenting Results
+</b>
+</p>
+
+---
+
+# Data viz plan
+
+Goal: The visuals should tell stories and provide takeaway messages
+
+--
+
+*   Viz 1: Updated version of animation for example play
+
+    *   Point size for each pass rusher represent their STRAIN at each frame
+
+    *   Highlight focused player (M. Crosby) with a different color
+    
+--
+
+*   Viz 2: How do the feature (distance, velocity, STRAIN) for M. Crosby interact within the play?
+
+    *   Line graph showing how each feature change as the play evolves
+
+---
+
+# Example play animation
+
+- Update original figure with STRAIN values for pass rushers
+
+- Also adjust color and size of each player on the field
+
+```{r, echo=TRUE}
+example_pass_rush <- tracking_pass_rush |>
+  filter(gameId == 2021101709, playId == 1444, !is.na(strain))
+
+example_play_strain <- example_play |>
+  left_join(select(example_pass_rush, gameId:frameId, strain)) |>
+  mutate(
+    pt_color = ifelse(nflId != 47889, pt_color, "maroon"),
+    pt_color = ifelse(team != "football", pt_color, "yellow"),
+    pt_size = ifelse(is.na(strain), 3, scales::rescale(strain, to = c(3, 8), from = range(example_pass_rush$strain))),
+    pt_size = ifelse(team == "football", 2, pt_size)
+  )
+```
+
+---
+
+# Example play animation
+
+.pull-left[
+
+```{r, eval=FALSE, echo=TRUE}
+field_background +
+  geom_point(data = example_play_strain,
+             aes(120 - x, 160 / 3 - y),
+             size = example_play_strain$pt_size,
+             color = example_play_strain$pt_color) +
+  transition_time(example_play_strain$frameId)
+```
+
+]
+
+.pull-right[
+
+```{r, out.width="70%"}
+knitr::include_graphics("sportyr_strain.gif")
+```
+
+
+]
+
+---
+
+# Feature curves
+
+.pull-left[
+
+```{r, eval=FALSE, echo=TRUE}
+example_pass_rush |>
+  filter(nflId == 47889) |>
+  pivot_longer(cols = c(d_qb, v_qb, strain),
+               names_to = "feature",
+               values_to = "value") |>
+  mutate(
+    feature = fct_relevel(feature, "strain", after = Inf),
+    feature = fct_recode(feature,
+                         "Distance" = "d_qb",
+                         "Velocity" = "v_qb",
+                         "STRAIN" = "strain")
+  ) |>
+  ggplot(aes(frameId_corrected, value, color = feature)) +
+  geom_line(linewidth = 1.5) +
+  scale_color_manual(
+    values = c("blue", "orange", "maroon")
+  ) +
+  labs(x = "Number of frames since snap",
+       y = "Feature value",
+       color = NULL)
+```
+
+]
+
+.pull-right[
+
+```{r, out.width="99%"}
+knitr::include_graphics("features.png")
+```
+
+
+]
+
+---
+
+# Bonus: combining animation
+
+*   We can also combine the play animation and the feature curves into one figure
+
+*   Check out this [GitHub wiki](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) on animation composition
+
+(TLDR: the trick is to make sure both figures have the same duration (i.e., number of frames), then append them using `magick` package)
+
+---
+
+```{r, out.width="61%"}
+knitr::include_graphics("https://raw.githubusercontent.com/qntkhvn/strain/main/figures/example_play.gif")
+```
+
+
+---
+
+count: false
+
+class: center, middle
+
+<p style="font-size:3em; color: #C41230">
+<b>
+Metric Validation
+</b>
+</p>
+
+---
+
+# Does the metric actually make sense?
+
+--
+
+**Face validity**: Who are the top players according to the metric? Does it pass the "eye test"?
+
+--
+
+[**"Meta-metrics"**](https://arxiv.org/abs/1609.09830) - Franks et al. (2017)
+
+--
+
+-   Discrimination: Does the metric differentiate between players? (across different positions? play outcomes?)
+
+-   Stability/predictability: Is the metric stable over time? How does the metric relate to previous metrics?
+
+-   Independence: Does the metric provide new information?
+
+--
+
+(See also this sweet [blog post](https://tonyelhabr.rbind.io/posts/soccer-meta-analytics/) by Tony ElHabr)
+
+---
+
+# Ranking the best pass rushers
+
+Goal: obtain a leaderboard of the top-performing pass rushers based on the average STRAIN across all frames played
+
+Note: we will consider players with at least 100 snaps played as pass rushers
+
+First, get players with at least 100 snaps played as pass rushers
+
+```{r, echo=TRUE}
+pass_rushers_eval <- pffScoutingData |>
+  filter(pff_role == "Pass Rush") |>
+  group_by(nflId) |>
+  summarize(snaps = n_distinct(gameId, playId)) |>
+  filter(snaps >= 100)
+```
+
+---
+
+# Ranking the best pass rushers
+
+Calculate average STRAIN and output rankings with `gt`
+
+*   Columns: player, team, position, snaps played, average STRAIN
+
+*   Color gradient for metric column
+
+*   Check out [`gt`](https://gt.rstudio.com/) and [`gtExtras`](https://jthomasmock.github.io/gtExtras/)
+
+```{r, echo=TRUE, eval=FALSE}
+library(gt)
+ranking_pass_rush <- tracking_pass_rush |>
+  filter(nflId %in% pass_rushers_eval$nflId, !is.infinite(strain)) |>
+  group_by(nflId) |>
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE),
+            snaps = n_distinct(gameId, playId),
+            team = first(team)) |>
+  left_join(players) |>
+  arrange(desc(avg_strain)) |> 
+  select(Player = displayName, Team = team, Position = officialPosition,
+         Snaps = snaps, "Average STRAIN" = avg_strain)
+```
+
+---
+
+# Top 10 edge rushers (OLB & DE)
+
+
+.pull-left[
+```{r, echo=TRUE, eval=FALSE}
+ranking_pass_rush |> 
+  filter(Position %in% c("OLB", "DE")) |> 
+  slice_head(n = 10) |> 
+  gt() |> 
+  fmt_number(
+    columns = c("Average STRAIN"), 
+    decimals = 2
+  ) |>
+  data_color(
+    columns = c("Average STRAIN"),
+    fn = scales::col_numeric(
+      palette = c("lightgreen", "darkgreen"),
+      domain = NULL
+    )
+  ) |>
+  tab_header(
+    title = "Top 10 Edge Rushers", 
+    subtitle = "(Minimum 100 plays)"
+  )
+```
+]
+
+.pull-right[
+
+```{r, out.width="80%"}
+knitr::include_graphics("edge.png")
+```
+
+
+]
+
+---
+
+# Top 10 interior rushers (DT & NT)
+
+.pull-left[
+
+```{r, echo=TRUE, eval=FALSE}
+ranking_pass_rush |>
+  filter(Position %in% c("DT", "NT")) |>
+  slice_head(n = 10) |>
+  gt() |>
+  fmt_number(
+    columns = c("Average STRAIN"), 
+    decimals = 2
+  ) |>
+  data_color(
+    columns = c("Average STRAIN"),
+    fn = scales::col_numeric(
+      palette = c("lightblue", "darkblue"),
+      domain = NULL
+    )
+  ) |> 
+  tab_header(
+    title = "Top 10 Interior Rushers", 
+    subtitle = "(Minimum 100 plays)"
+  )
+```
+
+]
+
+.pull-right[
+
+```{r, out.width="85%"}
+knitr::include_graphics("interior.png")
+```
+
+
+]
+
+---
+
+# Positional STRAIN curves
+
+.pull-left[
+
+*   Join tracking info with `players` to get each player's position
+
+```{r, echo=TRUE, eval=FALSE}
+tracking_pass_rush |> 
+  left_join(players) |>
+  filter(
+    frameId_corrected <= 40,
+    officialPosition %in% c("OLB", "DE", "DT", "NT")
+  ) |> 
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT")
+  ) |>
+  group_by(frameId_corrected, officialPosition) |> 
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE)) |> 
+  ggplot(aes(frameId_corrected, avg_strain, 
+             color = officialPosition)) +
+  geom_smooth(se = FALSE, span = 0.3, linewidth = 1) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Number of frames since snap",
+       y = "Average STRAIN",
+       color = "Position")
+```
+]
+
+--
+
+.pull-right[
+
+* STRAIN differentiates between positions (edge & interior)
+
+```{r, out.width="90%"}
+knitr::include_graphics("pos.png")
+```
+
+]
+
+---
+
+# Play outcome STRAIN curves
+
+.pull-left[
+
+* Determine whether a player recorded a sack, hit, hurry, or none for each play
+
+```{r, echo=TRUE, eval=FALSE}
+pff_outcomes <- pffScoutingData |> 
+  group_by(gameId, playId, nflId) |> 
+  summarize(i_hit = sum(pff_hit, na.rm = TRUE) > 0,
+            i_hurry = sum(pff_hurry, na.rm = TRUE) > 0 ,
+            i_sack = sum(pff_sack, na.rm = TRUE) > 0,
+            i_none = (i_hit + i_hurry + i_sack) == 0) |> 
+  ungroup() |> 
+  pivot_longer(i_hit:i_none,
+               names_to = "outcome",
+               names_prefix = "i_",
+               values_to = "value") |> 
+  filter(value)
+```
+
+]
+
+--
+
+.pull-right[
+
+* STRAIN curves faceted by outcome
+
+```{r, echo=TRUE, eval=FALSE}
+tracking_pass_rush |> left_join(pff_outcomes) |> 
+  left_join(players) |>
+  filter(frameId_corrected <= 40,
+         officialPosition %in% c("OLB", "DE", "DT", "NT")
+  ) |> 
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT"),
+    outcome = fct_relevel(outcome, 
+                          "sack", "hit", "hurry", "none")
+  ) |>
+  group_by(frameId_corrected, outcome, officialPosition) |> 
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE)) |> 
+  ggplot(aes(frameId_corrected, avg_strain, 
+             color = officialPosition)) +
+  geom_smooth(se = FALSE, span = 0.3, linewidth = 1) +
+  facet_wrap(~ outcome, nrow = 1) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Number of frames since snap",
+       y = "Average STRAIN",
+       color = "Position") +
+  theme(legend.position = "bottom")
+```
+
+
+]
+
+---
+
+# STRAIN differentiates between play outcomes
+
+<br>
+
+```{r, out.width="95%"}
+knitr::include_graphics("outcomes.png")
+```
+
+
+---
+
+# Correlation between STRAIN and pressure rate
+
+Average STRAIN vs pressure rate $\left(\displaystyle \frac{\text{Hurries} + \text{Sacks} + \text{Hits}}{\text{Snaps}}\right)$
+
+*   Obtain hurries, sacks, hits from PFF scouting data
+
+```{r, echo=TRUE}
+pff_pressure <- pffScoutingData |>
+  group_by(nflId) |>
+  summarize(hurries = sum(pff_hurry, na.rm = TRUE),
+            sacks = sum(pff_sack, na.rm = TRUE),
+            hits = sum(pff_hit, na.rm = TRUE))
+```
+
+---
+
+# Correlation between STRAIN and pressure rate
+
+.pull-left[
+
+*   Join with tracking data and calculate pressure rate
+
+```{r, echo=TRUE}
+strain_pressure <- tracking_pass_rush |>
+  filter(nflId %in% pass_rushers_eval$nflId, 
+         !is.infinite(strain)) |>
+  group_by(nflId) |>
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE),
+            snaps = n_distinct(gameId, playId)) |>
+  left_join(pff_pressure) |>
+  mutate(pressure_rate = (hurries + sacks + hits) / snaps)
+
+strain_pressure |> 
+  slice_head(n = 5)
+```
+
+]
+
+.pull-right[
+
+*   Compute correlation
+
+```{r, echo=TRUE}
+cor(strain_pressure$avg_strain, 
+    strain_pressure$pressure_rate)
+```
+
+]
+
+---
+
+# STRAIN is predictive of pressure rate
+
+Scatterplot of pressure rate vs average STRAIN, color coded by position
+
+.pull-left[
+
+```{r, echo=TRUE, eval=FALSE}
+strain_pressure |>
+  left_join(players) |>
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT")
+  ) |>
+  ggplot(aes(avg_strain, pressure_rate)) +
+  geom_point(aes(color = officialPosition), size = 2) +
+  geom_smooth(method = "lm", se = FALSE, 
+              color = "darkblue", linewidth = 1.5) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Average STRAIN",
+       y = "Pressure rate",
+       color = "Position")
+```
+
+]
+
+.pull-right[
+
+```{r, out.width="90%"}
+knitr::include_graphics("predictive.png")
+```
+
+
+]
+
+---
+
+# Metric stability
+
+Is previous performance predictive of future performance based on the metric? (How much does our metric vary over time?)
+
+What's the correlation between a player's performance on our metrics in the first and second halves of the provided data (i.e. first 4 weeks vs last 4 weeks)?
+
+---
+
+# Metric stability
+
+.pull-left[
+
+*   Obtain average STRAIN for the first and last 4 weeks of the 2021 season
+
+```{r, echo=TRUE}
+strain_weeks <- tracking_pass_rush |>
+  filter(nflId %in% pass_rushers_eval$nflId, 
+         !is.infinite(strain)) |>
+  left_join(games) |>
+  mutate(i_week = ifelse(week > 4, "last4", "first4")) |>
+  group_by(nflId, i_week) |>
+  summarize(avg_strain = 10 * mean(strain, na.rm = TRUE)) |>
+  ungroup() |>
+  pivot_wider(names_from = i_week, values_from = avg_strain)
+
+strain_weeks |> slice_head(n = 5)
+```
+
+]
+
+.pull-right[
+
+*   Compute correlation
+
+```{r, echo=TRUE}
+cor(strain_weeks$first4, strain_weeks$last4)
+```
+
+]
+
+---
+
+# STRAIN is highly stable over time
+
+.pull-left[
+
+```{r, echo=TRUE, eval=FALSE}
+strain_weeks |>
+  left_join(players) |>
+  mutate(
+    officialPosition = fct_relevel(officialPosition, 
+                                   "OLB", "DE", "DT", "NT")
+  ) |>
+  ggplot(aes(first4, last4)) +
+  geom_point(aes(color = officialPosition), size = 2) +
+  geom_smooth(method = "lm", se = FALSE, 
+              color = "darkblue", linewidth = 1.5) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Average STRAIN (first 4 weeks)",
+       y = "Average STRAIN (last 4 weeks)",
+       color = "Position")
+```
+
+]
+
+.pull-right[
+
+```{r, out.width="90%"}
+knitr::include_graphics("stable.png")
+```
+
+
+]
+
+---
+
+# Is STRAIN predictive of pressure than pressure itself?
+
+Exercise. Make 2 scatterplots:
+
+*   Pressure rate (first 4 weeks) vs Pressure rate (last 4 weeks)
+
+*   Average STRAIN (first 4 weeks) vs Pressure rate (last 4 weeks)
+
+Which plot depicts a stronger relationship?
+
+---
+
+# Is STRAIN predictive of pressure than pressure itself?
+
+The answer is yes, as shown in our paper
+
+```{r, out.width="80%"}
+knitr::include_graphics("predictability.png")
+```
+
+---
+
+# Advices
+
+* Do it!
+
+* Keep it simple. Don't try to do too much. Focus on a specific aspect.
+
+* Think outside the box. Adapt concepts from other fields (physical sciences, etc.)
+
+* Slick data viz is key
+
+* Write (and prune words) as you work
+
+* Enjoy learning (and the struggle)
+
+---
+
+# More resources
+
+- [CMSAC22 workshop slides](https://www.stat.cmu.edu/cmsac/conference/2022/workshop/slides.html) ([Slide 29](https://www.stat.cmu.edu/cmsac/conference/2022/workshop/slides.html#55) provides more resources)
+
+- [Mike Lopez's tracking data tutorial](https://www.kaggle.com/code/statsbymichaellopez/nfl-tracking-wrangling-voronoi-and-sonars)
+
+- [Asmae Toumi's twitter thread on BDB tips](https://twitter.com/asmae_toumi/status/1317510643369598981)
+
+- Nick Wan's [Kaggle tutorial notebooks](https://www.kaggle.com/nickwan/code?userId=1492355&sortBy=dateRun&tab=profile&searchQuery=Big+Data+Bowl) + [twitch stream](https://www.twitch.tv/nickwan_datasci) during BDB season
+
+- Past winner/finalist/honorable mention entries: [2019 and 2020](https://operations.nfl.com/gameday/analytics/big-data-bowl/past-big-data-bowl-recaps/), [2021](https://www.kaggle.com/competitions/nfl-big-data-bowl-2021/discussion/217170), [2022](https://www.kaggle.com/competitions/nfl-big-data-bowl-2022/discussion/307969), [2023](https://www.kaggle.com/competitions/nfl-big-data-bowl-2023/discussion/382941), [2024](https://www.kaggle.com/competitions/nfl-big-data-bowl-2024/discussion/472712)
+
+---
+
+# Acknowledgements: Ron and Greg
+
+.pull-left[
+
+```{r, out.width="60%"}
+knitr::include_graphics("https://pbs.twimg.com/profile_images/1614452588258230273/0QToRrz__400x400.jpg")
+
+```
+
+<center>
+Ron Yurko<br>Carnegie Mellon University
+</center>
+
+]
+
+.pull-right[
+
+```{r, out.width="55%"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/4/44/Manscooter.png")
+```
+
+<center>
+Greg Matthews<br>Loyola University Chicago
+</center>
+
+]
+
+---
+
+# Related links
+
+- Kaggle notebook: [kaggle.com/code/statsinthewild/strain-sacks-tackles-rushing-aggression-index](https://www.kaggle.com/code/statsinthewild/strain-sacks-tackles-rushing-aggression-index)
+
+- Paper: [arxiv.org/pdf/2305.10262](https://arxiv.org/pdf/2305.10262)
+
+- Contact me: [qntkhvn.netlify.app](https://qntkhvn.netlify.app)
+
+- Carnegie Mellon Sports Analytics Center: [stat.cmu.edu/cmsac](https://stat.cmu.edu/cmsac)
+
+<br>
+
+Cheers.
